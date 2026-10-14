@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import ProjectRow from './Projectrow';
 // 👇 [수정] Projects의 P를 대문자로 꼭 적어줘야 해!
-import { projects, getFeaturedProjects } from '../data/Projects';
+import { projects, getFeaturedProjects } from '../data/projects';
 
 export default function ProjectList() {
   const featured = getFeaturedProjects();

@@ -49,7 +49,7 @@ import Footer from "./portfolio/components/Footer";
 import Home from "./portfolio/pages/Home";
 import AllProjects from "./portfolio/pages/Allprojects";
 import ProjectDetail from "./portfolio/pages/Projectdetail";
-import { ToastProvider } from "./portfolio/context/Toastcontext";
+import { ToastProvider } from "./portfolio/context/ToastContext";
 import "./portfolio/style.css";
 
 export default function App() {

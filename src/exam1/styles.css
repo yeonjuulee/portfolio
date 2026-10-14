@@ -1,0 +1,1531 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Pretendard', -apple-system, sans-serif;
+}
+
+body {
+  background-color: #f9f9f9;
+  color: #333;
+  display: flex;
+  justify-content: center;
+}
+
+#root {
+  width: 100%;
+  background-color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 0 20px rgba(0,0,0,0.05);
+  padding: 40px 60px;
+}
+
+/* 네비게이션=============================================================================================================== */
+.navi {
+  margin: 0 auto;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background-color: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid #f1f5f9;
+  padding: 16px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo a {
+  font-size: 28px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  color: #4CAF50;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.logo a:hover {
+  color: #2e7d32;
+}
+
+/* 3. 우측 메뉴 그룹 */
+.menu {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  gap: 40px;
+}
+
+.menu li a {
+  font-size: 20px;
+  font-weight: 400;
+  color: #64748b;
+  text-decoration: none;
+  position: relative;
+  padding: 4px 0;
+  transition: color 0.2s ease;
+}
+
+
+.menu li a:hover {
+  color: #1e293b;
+}
+
+.menu li a::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background-color: #4CAF50;
+  transition: width 0.2s ease;
+}
+
+.menu li a:hover::after {
+  width: 100%;
+}
+
+.container {
+  padding: 20px;
+  flex: 1;
+}
+
+/*공통 이미지 플레이스홀더*/
+.img-placeholder {
+  width: 200px;
+  aspect-ratio: 4 / 3;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  background: linear-gradient(135deg, #e0e0e0 0%, #f0f0f0 100%);
+  color: #888;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+}
+
+/*공통 뒤로가기 버튼*/
+.back-btn {
+  background: none;
+  border: none;
+  color: #4CAF50;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-bottom: 20px;
+}
+
+/* 메인 페이지=================================================================== */
+.main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-bottom: 40px;
+}
+
+/* 배너 영역 스타일 */
+/* .banner {
+  width: 100%;
+  height: 420px;
+  background: linear-gradient(180deg, #dddddd 0%, #b5b5b5 100%);
+  border-bottom-left-radius: 24px;
+  border-bottom-right-radius: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.banner p {
+  color: #555;
+  font-weight: bold;
+} */
+
+/* ==========================================================================
+   넷플릭스 스케일업 버전 : 대형 4:3 와이드 자동 롤링 배너 스타일
+   ========================================================================== */
+
+.multi-banner-wrapper {
+  width: 100%;
+  background-color: #f1f1f1;
+  padding: 30px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 24px;
+}
+
+.main-banner-container {
+  width: 100%;
+  max-width: 1200px;
+  position: relative;
+  padding: 0 20px;
+  box-sizing: border-box;
+}
+
+.banner-showroom-container {
+  width: 100%;
+  aspect-ratio: 5 / 3;
+  position: relative;
+  background-color: #f2f2f2;
+  border-radius: 28px;
+  overflow: hidden;
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+}
+
+/* 개별 배너 박스 페이드 효과 속도 최적화 */
+.ott-banner-box {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  cursor: pointer;
+  transition: opacity 0.6s ease-in-out, transform 0.6s ease-in-out;
+}
+
+.ott-banner-box.active {
+  opacity: 1;
+  visibility: visible;
+  transform: scale(1);
+  z-index: 5;
+}
+
+.ott-banner-box.inactive {
+  opacity: 0;
+  visibility: hidden;
+  transform: scale(0.99);
+  z-index: 1;
+}
+
+/* ─── 1. 좌측 가장자리: 9:16 비율 포스터 구역 ─── */
+.ott-poster-zone {
+  flex: 0 0 42%; /* 대화면 밸런스를 위해 포스터 가로 비중을 살짝 조절 */
+  height: 100%;
+  overflow: hidden;
+  position: relative;
+}
+
+.ott-poster-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.ott-gradient-overlay {
+  position: absolute; /* 💡 겹치기 마진 대신, 이미지 위에 완벽하게 얹어지도록 절대 좌표로 변경 */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to right, rgba(15, 23, 42, 0) 0%, rgba(15, 23, 42, 0.1) 30%, rgb(255 255 255 / 60%) 36%, rgb(255 255 255) 42%, rgb(255 255 255) 100%);
+  
+  display: flex;
+  align-items: center;
+  justify-content: flex-end; /* 글자는 여전히 우측 가장자리에 배치 */
+  padding: 60px;
+  box-sizing: border-box;
+  z-index: 2;
+}
+
+/* 우측 정렬 텍스트 컴포넌트 */
+.ott-text-zone {
+  max-width: 480px; /* 💡 배너가 커진 만큼 텍스트가 수납될 가로 폭도 480px로 확장! */
+  display: flex;
+  flex-direction: column;
+  gap: 14px; /* 줄 간격 넓히기 */
+  text-align: right; 
+}
+
+.ott-tag {
+  font-size: 12px;
+  font-weight: 800;
+  color: #4CAF50;
+  letter-spacing: 1.5px;
+  background-color: rgba(76, 175, 80, 0.1);
+  padding: 4px 10px;
+  border-radius: 6px;
+  width: fit-content;
+  margin-left: auto; /* 우측 정렬 유지 */
+}
+
+.ott-title {
+  font-size: 32px;
+  font-weight: 900;
+  color: #1e293b;
+  margin: 0;
+  line-height: 1.25;
+  word-break: keep-all;
+  letter-spacing: -0.5px;
+}
+
+.ott-date {
+  font-size: 15px; /* 13px -> 15px로 스케일업 */
+  font-weight: 700;
+  color: #94a3b8;
+  margin: 0;
+}
+
+/* ─── 3. 하단 스위칭 조작 컨트롤 바 ─── */
+.banner-control-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 24px;
+  background-color: #ffffff;
+  padding: 8px 24px;
+  border-radius: 30px;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+}
+
+.control-arrow {
+  background: none;
+  border: none;
+  font-size: 16px;
+  font-weight: 700;
+  color: #94a3b8;
+  cursor: pointer;
+}
+.control-arrow:hover {
+  color: #1e293b;
+}
+
+.control-page-num {
+  font-size: 14px;
+  font-weight: 700;
+}
+
+/* 서브베너 */
+
+.sub-banner-wrapper {
+  width: 100%;
+  padding: 60px 0 30px 0; /* 메인 축제 배너와 아래 검색창 사이의 간격 조절 */
+  display: flex;
+  justify-content: center;
+}
+
+.sub-banner-container {
+  width: 100%;
+  max-width: 1400px; /* 상단 메인 배너와 가로폭 칼정렬 맞춤 */
+  height: 90px;      /* 💡 서브 배너답게 슬림하고 컴팩트한 높이 지정 */
+  position: relative;
+  overflow: hidden;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+/* 가로 100%씩 나란히 서 있는 슬라이드 트랙 */
+.sub-banner-track {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* 개별 광고 슬라이드 낱개 */
+.sub-banner-slide {
+  flex: 0 0 100%;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* 문구는 왼쪽, 화살표 힌트는 오른쪽 */
+  padding: 0 30px;
+  box-sizing: border-box;
+  cursor: pointer;
+  color: #ffffff;
+}
+
+/* 왼쪽 텍스트 구역 */
+.sub-banner-content {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  text-align: left; /* 정갈하게 좌측 정렬 */
+}
+
+.sub-ad-tag {
+  font-size: 9px;
+  font-weight: 800;
+  color: #deff9a; /* 눈에 띄는 네온 라임 컬러 태그 */
+  letter-spacing: 1px;
+}
+
+.sub-ad-title {
+  font-size: 15px;
+  font-weight: 700;
+  margin: 0;
+}
+
+.sub-ad-desc {
+  font-size: 12px;
+  opacity: 0.85;
+  margin: 0;
+}
+
+/* 우측 보러가기 힌트 텍스트 */
+.sub-banner-arrow-hint {
+  font-size: 12px;
+  font-weight: 700;
+  background-color: rgba(255, 255, 255, 0.15);
+  padding: 6px 14px;
+  border-radius: 20px;
+  transition: background-color 0.2s ease;
+}
+.sub-banner-slide:hover .sub-banner-arrow-hint {
+  background-color: rgba(255, 255, 255, 0.25);
+}
+
+/* 💡 하단 2칸짜리 슬림 대시 인디케이터 */
+.sub-banner-indicator-bar {
+  position: absolute;
+  bottom: 8px;
+  left: 30px; /* 왼쪽 문구 정렬선에 맞춰 배치 */
+  display: flex;
+  gap: 4px;
+}
+
+.indicator-line {
+  width: 20px;
+  height: 2px;
+  background-color: rgba(255, 255, 255, 0.3);
+  border-radius: 2px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.indicator-line.active {
+  width: 35px; /* 현재 켜진 광고 페이지는 가로 바가 길어짐 */
+  background-color: #ffffff;
+}
+
+
+/* 검색 섹션 */
+.searchSection {
+  width: 100%;
+  padding: 40px;
+  text-align: center;
+  margin-top: 40px;
+}
+.searchSection h2 {
+  font-size: 30px;
+  font-weight: 700;
+  margin-bottom: 20px;
+  color: #222;
+}
+.searchSection input {
+  width: 100%;
+  padding: 12px 30px;
+  border: 1.5px solid #e0e0e0;
+  border-radius: 50px;
+  outline: none;
+  font-size: 18px;
+  transition: all 0.3s ease;
+}
+.searchSection input:focus {
+  border-color: #4CAF50;
+  box-shadow: 0 0 8px rgba(76, 175, 80, 0.15);
+}
+
+/* 메인 페이지 - 과일 리스트 */
+.main ul {
+  width: 100%;
+  padding: 0 20px;
+  list-style: none;
+}
+.main ul li {
+  background: linear-gradient(90deg, #ffffff 0%, #f5f5f5 100%);
+  border: 1px solid #eaeaea;
+  border-radius: 16px;
+  padding: 16px;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  position: relative;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+.main ul li:hover {
+  transform: translateY(-2px);
+}
+.main ul li .img-placeholder {
+  width: 60px;
+  height: 60px;
+  border-radius: 12px;
+  position: absolute;
+  right: 16px;
+}
+.main ul li span {
+  font-size: 20px;
+  font-weight: 600;
+  margin-right: 8px;
+}
+/* ==========================================================================
+   과일 상세 도감 및 품종 페이지 통합 스타일 (오류 수정본)
+   ========================================================================== */
+
+.fruit-detail-page {
+  padding: 0 !important; /* 전체 컨테이너 여백을 제로로 만들어 벽에 딱 붙임 */
+  overflow: hidden;
+}
+
+.fruit-visual-header {
+    width: 100%;
+    height: 400px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: relative;
+    display: flex;
+    align-items: flex-end;
+    padding: 30px;
+    box-sizing: border-box;
+    border-radius: 24px;
+    border-bottom-right-radius: 24px;
+    margin-top: 30px;
+}
+
+.back-btn-overlay {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  background-color: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(4px);
+  border: none;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 700;
+  color: #1e293b;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  transition: all 0.2s ease;
+}
+.back-btn-overlay:hover {
+  background-color: #ffffff;
+  transform: translateX(-2px);
+}
+
+.header-text-bundle {
+  color: #ffffff;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+  width: 100%;
+  max-width: 600px;
+}
+.header-text-bundle .header-tag {
+  font-size: 10px;
+  font-weight: 800;
+  color: #deff9a;
+  letter-spacing: 1.5px;
+}
+.header-text-bundle h2 {
+  font-size: 32px;
+  font-weight: 900;
+  margin: 0;
+}
+.header-text-bundle .sub-desc {
+  font-size: 14px;
+  color: #f1f5f9;
+  line-height: 1.5;
+  margin: 0;
+  opacity: 0.95;
+}
+
+
+.fruit-content-body {
+  padding: 30px 20px;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 1600px;
+  margin: 0 auto;
+}
+
+.section-title {
+  font-size: 18px;
+  font-weight: 800;
+  color: #1e293b;
+  margin-top: 0;
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+
+.variety-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  width: 100%;
+}
+
+.variety-item {
+  border: 1px solid #eaeaea;
+  border-radius: 16px;
+  padding: 16px;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  min-height: 102px;
+  gap: 16px;
+  background-color: #ffffff;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+.variety-item:hover {
+  background-color: #fafafa;
+}
+
+.variety-img-box {
+  width: 70px;
+  height: 70px;
+  border-radius: 12px;
+  overflow: hidden;
+  flex-shrink: 0;
+  background-color: #f1f5f9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.variety-thumb-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.variety-text {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex-grow: 1;
+  text-align: left; /* 정갈하게 좌측 정렬 */
+}
+.variety-name {
+  font-size:20px;
+  font-weight: 700;
+  color: #222222;
+}
+.variety-desc {
+  font-size: 16px;
+  color: #777777;
+  line-height: 1.4;
+}
+
+
+/* ─── 품종 정보 상세화면 스타일] ─── */
+.variety-header-container {
+  display: flex;
+  gap: 24px;           /* 이미지와 텍스트 사이의 여백 */
+  align-items: center;  /* 세로 기준 가운데 정렬 */
+  margin-bottom: 24px;
+  width: 100%;
+}
+
+.variety-main-img-container {
+  flex-shrink: 0;
+  width: 36%;
+  aspect-ratio: 5 / 3;
+  overflow: hidden;
+  border-radius: 20px;
+}
+
+/* 이미지 채우기 속성 */
+.variety-main-img-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+/* 링크 이동이 가능한 이미지 컨테이너 기본 베이스 정의 */
+.variety-main-img-container.clickable {
+  position: relative;
+  cursor: pointer;
+  transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* 이미지 위에 씌워질 투명 그라데이션 레이어 */
+.img-hover-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to bottom, rgba(0,0,0,0) 60%, rgba(0,0,0,0.15));
+  opacity: 0; 
+  transition: opacity 0.2s ease;
+  pointer-events: none;
+}
+
+/* 마우스 호버(Hover) 스타일: 이미지 스케일 및 그라데이션 가시화 */
+.variety-main-img-container.clickable:hover {
+  transform: scale(1.02); 
+}
+
+.variety-main-img-container.clickable:hover .img-hover-overlay {
+  opacity: 1;
+}
+
+.variety-main-img-container.clickable:hover img {
+  filter: brightness(0.92); 
+}
+
+.variety-main-img-container.clickable:active {
+  transform: scale(0.98);
+}
+.variety-main-img-container.clickable:active img {
+  filter: brightness(0.85);
+}
+
+/* 우측 텍스트 정렬 박스 */
+.variety-text-container {
+  flex: 1;             /* 남은 가로 공간을 꽉 채움 */
+  display: flex;
+  flex-direction: column;
+  gap: 8px;            /* 타이틀과 설명 사이 간격 */
+  text-align: left;
+}
+
+/* 우측 품종명 타이틀 */
+.variety-text-container h2 {
+  font-size: 40px;
+  font-weight: 800;
+  color: #222222;
+  margin: 0;
+}
+
+/* 우측 품종 서브 설명 */
+.variety-text-container .sub-desc {
+  font-size: 22px;
+  color: #666666;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+.grid-box {
+  background-color: #ffffff;
+  border: 1.5px solid #eaeaea;
+  border-radius: 14px;
+  padding: 14px;
+  text-align: left;
+}
+.grid-box p:first-child {
+  font-size: 20px;
+  font-weight: 700;
+  color: #222;
+  margin-bottom: 6px;
+}
+.grid-box p:last-child {
+  font-size: 18px;
+  color: #555;
+}
+
+.wide-box {
+  background-color: #ffffff;
+  border: 1.5px solid #eaeaea;
+  border-radius: 14px;
+  padding: 16px;
+  margin-bottom: 12px;
+  text-align: left;
+}
+.wide-box h3 {
+  font-size: 20px;
+  font-weight: 700;
+  color: #222;
+  margin-bottom: 8px;
+}
+
+
+.wide-box p {
+  font-size: 18px;
+  color: #555;
+  line-height: 1.5;
+}
+/* 레시피 페이지 ======================================================= */
+/* ==========================================================================
+   image_e34cae.png : 레시피 페이지 전용 스타일링
+   ========================================================================== */
+
+/* 레시피 페이지 전체 레이아웃 타이틀 */
+.page-title {
+  font-size: 30px;
+  font-weight: bold;
+  margin-bottom: 30px;
+  color: #222;
+}
+
+/* 1. 레시피 목록 카드 뷰 스타일 */
+.recipeList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  width: 100%;
+}
+
+.recipeItem {
+  background: #ffffff;
+  border: 1px solid #eaeaea;
+  border-radius: 16px; /* 시안 특유의 부드러운 라운드 처리 */
+  padding: 24px;
+  margin-bottom: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.recipeItem:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+}
+
+.recipeItemInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+}
+
+.recipeItemName {
+  font-size: 20px;
+  font-weight: 700;
+  color: #111;
+}
+
+.recipeItemDesc {
+  font-size: 16px;
+  color: #666;
+  line-height: 1.4;
+  margin-bottom: 4px;
+}
+
+/* 사용 과일 태그 및 시간 메타 데이터 */
+.recipeItemMeta {
+  font-size: 14px;
+  color: #4CAF50; /* 포인트 그린 진한 톤 적용 */
+  font-weight: 500;
+}
+
+
+/* 2. 레시피 상세 정보 뷰 스타일 */
+.recipeDetailHeader {
+  margin-bottom: 24px;
+}
+
+.title-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.title-wrapper h2 {
+  font-size: 28px;
+  font-weight: 700;
+  color: #111;
+}
+
+/* ⭐️ 즐겨찾기 별 토글 버튼 스타일 디자인 */
+.fav-star-btn {
+  background: none;
+  border: none;
+  font-size: 26px;
+  color: #ccc; /* 기본 빈 별 색상 */
+  cursor: pointer;
+  transition: transform 0.1s ease, color 0.2s ease;
+  line-height: 1;
+}
+
+.fav-star-btn:active {
+  transform: scale(1.2);
+}
+
+.fav-star-btn.active {
+  color: #FFC107; /* ⭐️ 클릭되어 활성화되면 노란색으로 점등 */
+  text-shadow: 0 0 4px rgba(255, 193, 7, 0.3);
+}
+
+/* 3. 재료 / 소요 시간 대칭 그리드 구조 (2분할 가로 정렬) */
+.recipeDetailGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.recipeDetailCard {
+  background-color: #ffffff;
+  border: 1.5px solid #eaeaea;
+  border-radius: 14px;
+  padding: 16px;
+}
+
+.recipeDetailCard h3 {
+  font-size: 20px;
+  font-weight: 700;
+  color: #222;
+  margin-bottom: 6px;
+}
+
+.recipeDetailCard p {
+  font-size: 18px;
+  color: #555;
+  line-height: 1.4;
+}
+
+/* 4. 하단 레시피 단계 순서 리스트 레이아웃 */
+.recipeSteps ol {
+  list-style: none; /* 기본 숫자 제거 후 커스텀 넘버링 */
+  padding: 0;
+  margin-top: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.recipeSteps li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+/* 동그란 숫자 인덱스 칩 UI */
+.step-num {
+  background-color: #ecfdf5;
+  color: #10b981;
+  font-size: 12px;
+  font-weight: 700;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.step-text {
+  font-size: 18px;
+  color: #444;
+  line-height: 1.5;
+}
+
+.no-result {
+  text-align: center;
+  color: #999;
+  padding: 40px 0;
+  font-size: 14px;
+}
+
+/* ==========================================================================
+   image_d435c9.png : 행사/체험 페이지 3열 그리드 및 상세 뷰 스타일
+   ========================================================================== */
+
+/* 1. 카테고리 타원형 가로 스크롤 탭 컨테이너 */
+.category-tab-container {
+  display: flex;
+  gap: 6px;
+  overflow-x: auto; /* 모바일 대응 가로 스크롤 활성화 */
+  padding: 4px 0 16px 0;
+  margin-bottom: 8px;
+}
+.category-tab-container::-webkit-scrollbar {
+  display: none; /* 스크롤바 숨겨서 깔끔하게 처리 */
+}
+
+.category-tab-btn {
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  padding: 6px 14px;
+  border-radius: 30px;
+  font-size: 18px;
+  color: #555555;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+}
+
+.category-tab-btn.active {
+  background-color: #4CAF50;
+  border-color: #4CAF50;
+  color: #ffffff;
+  font-weight: 600;
+}
+
+.region-indicator {
+  font-size: 24px;
+  font-weight: 700;
+  color: #333;
+  margin: 24px 0;
+}
+
+/* 2. 시안 특유의 정사각형 카드 멀티 그리드 정렬 (3열 배치) */
+.eventGridList {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr); /* 🌟 시안 가이드대로 정확히 3열 배치 */
+  gap: 10px;
+  width: 100%;
+}
+
+.eventCardItem {
+  background-color: #ffffff;
+  border: 1px solid #eaeaea;
+  border-radius: 12px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+.eventCardItem:hover {
+  transform: translateY(-2px);
+}
+
+
+.card-img-placeholder {
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  background-color: #f3f4f6;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* 💡 추가된 속성: 이미지가 없을 때 기본 방어 코스 */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+
+/* 디데이 배지 UI 스타일 */
+.dday-badge {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  background-color: #4b5563; /* 기본 대기 상태 회색 */
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 700;
+  padding: 3px 6px;
+  border-radius: 6px;
+}
+.dday-badge.ongoing {
+  background-color: #ef4444; /* 진행중일 때는 빨간색 피드백 */
+}
+
+/* 카드 내 우측 상단 즐겨찾기 대기 아이콘 */
+.card-star-icon {
+  position: absolute;
+  top: 6px;
+  right: 8px;
+  font-size: 16px;
+  color: #9ca3af;
+}
+
+/* 카드 하단 텍스트 정보 수납칸 */
+.card-info-content {
+  padding: 20px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.card-title-text {
+  font-size: 22px;
+  font-weight: 700;
+  color: #111111;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis; /* 긴 제목 자르기 */
+}
+
+.card-date-text {
+  font-size: 18px;
+  color: #777777;
+}
+
+.card-loc-text {
+  font-size: 16px;
+  color: #4CAF50;
+  font-weight: 600;
+}
+
+
+.no-result-text {
+  grid-column: span 3; /* 결과 없을 때 가로 병합 */
+  text-align: center;
+  color: #999;
+  padding: 60px 0;
+  font-size: 14px;
+}
+
+/* ==========================================================================
+   image_ba50d8.jpg : 축제 상세 페이지 좌우 2분할 폼 및 아이콘 레이아웃
+   ========================================================================== */
+
+/* 메인 플렉스 컨테이너 (좌우 분할) */
+.eventMainFlexContainer {
+  display: flex;
+  gap: 80px;
+  margin-top: 20px;
+  margin-bottom: 30px;
+  align-items: center;
+}
+
+/* 1. 좌측 포스터 이미지 전용 부모 박스 */
+.eventPosterWrapper {
+  flex: 0 0 400px;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08); /* 입체감 효과 */
+  background-color: #f8fafc;
+}
+
+.eventPosterImg {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: contain;
+}
+
+/* 2. 우측 아이콘 기반 메타 정보 가이드 라인 */
+.eventInfoMetaList {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  padding-top: 4px;
+}
+
+/* 각 메타 정보 한 줄 레이아웃 */
+.metaInfoRow {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+/* 원형 이모지 배지 UI (시안 속 동그라미 아이콘 핏 복원) */
+.metaIcon {
+  width: 38px;
+  height: 38px;
+  background-color: #f1f5f9;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  flex-shrink: 0;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+}
+
+.metaWebLink {
+  text-decoration: none;
+  color: #334155;
+}
+
+/* 텍스트 영역 수납 레이아웃 */
+.metaText {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.metaLabel {
+  font-size: 16px;
+  font-weight: 700;
+  color: #94a3b8; /* 가이드 소제목용 연한 회색 */
+  text-transform: uppercase;
+}
+
+.metaText p {
+  font-size: 20px;
+  font-weight: 600;
+  color: #334155;
+  margin: 0;
+  line-height: 1.4;
+}
+
+.metaText .metaSub {
+  font-size: 14px;
+  color: #64748b;
+  font-weight: 500;
+  margin-top: 1px;
+}
+
+.feeHighlight {
+  color: #4CAF50 !important; /* 요금 '무료' 포인트 색상 강조 */
+  font-weight: 700 !important;
+}
+
+/* 3. 하단 상세 설명 박스 고도화 */
+.eventDescriptionBox {
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 24px;
+}
+
+
+
+.programTagContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+
+.programTagBadge {
+  font-size: 18px;
+}
+
+/* ==========================================================================
+   image_ca4fe1.png : 맞춤 과일 추천 페이지 전용 스타일링
+   ========================================================================== */
+
+.curationPage {
+  padding-bottom: 50px;
+}
+
+.curation-header {
+  margin-bottom: 24px;
+}
+
+.curation-section {
+  margin-bottom: 26px;
+}
+.curation-section h3 {
+  font-size: 15px;
+  font-weight: 700;
+  color: #222;
+  margin-bottom: 12px;
+}
+
+/* Taste 캡슐형 가로 칩 배치 그룹 */
+.taste-chip-group {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.taste-chip-btn {
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  padding: 8px 16px;
+  border-radius: 30px;
+  font-size: 13px;
+  color: #444;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.taste-chip-btn.active {
+  background-color: #4CAF50; /* 선택 시 소프트 그린 활성화 */
+  border-color: #4CAF50;
+  color: #ffffff;
+  font-weight: 600;
+}
+
+/* ⭐️ 핵심: 시안 속 현재 상태 3열 버튼 격자 그리드 박스 */
+.condition-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 무조건 3열 고정 */
+  gap: 10px;
+}
+
+.condition-grid-btn {
+  background-color: #ffffff;
+  border: 1.5px solid #eaeaea;
+  border-radius: 12px;
+  padding: 34px 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.condition-grid-btn .cond-emoji {
+  font-size: 44px;
+}
+
+.condition-grid-btn .cond-text {
+  font-size: 18px;
+  font-weight: 600;
+  color: #555;
+  text-align: center;
+  word-break: keep-all;
+  line-height: 1.3;
+}
+
+
+.condition-grid-btn.active {
+  border-color: #4CAF50;
+  background-color: #f0fdf4;
+  transform: scale(1.02);
+}
+.condition-grid-btn.active .cond-text {
+  color: #4CAF50;
+}
+
+.curation-result-section h3 {
+  font-size: 15px;
+  font-weight: 700;
+  color: #222;
+  margin-bottom: 12px;
+}
+
+.curation-result-card {
+  background: #ffffff;
+  border: 2px solid #4CAF50; 
+  border-radius: 20px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  cursor: pointer;
+  box-shadow: 0 10px 25px rgba(76, 175, 80, 0.08);
+  transition: transform 0.2s ease;
+}
+.curation-result-card:hover {
+  transform: translateY(-2px);
+}
+
+.result-fruit-emoji {
+  font-size: 40px;
+  margin-bottom: 6px;
+}
+
+.result-fruit-name {
+  font-size: 18px;
+  font-weight: 700;
+  color: #111;
+  margin-bottom: 10px;
+}
+
+.result-badge-group {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 14px;
+}
+
+.result-badge {
+  background-color: #f1f5f9;
+  color: #475569;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 6px;
+}
+
+.result-reason-text {
+  font-size: 13px;
+  color: #444444;
+  line-height: 1.6;
+  margin-bottom: 16px;
+  word-break: keep-all;
+}
+
+.click-tip-text {
+  font-size: 11px;
+  color: #4CAF50;
+  font-weight: 600;
+  background-color: #f0fdf4;
+  padding: 4px 12px;
+  border-radius: 20px;
+}
+
+.curation-waiting-card, .curation-empty-card {
+  background-color: #f8fafc;
+  border: 1px dashed #cbd5e1;
+  border-radius: 20px;
+  padding: 30px 20px;
+  text-align: center;
+}
+.curation-waiting-card p, .curation-empty-card p {
+  font-size: 13px;
+  font-weight: 600;
+  color: #64748b;
+  margin-bottom: 4px;
+}
+.curation-waiting-card span, .curation-empty-card span {
+  font-size: 12px;
+  color: #94a3b8;
+}
+
+
+.scrap-section h3 {
+  font-size: 14px;
+  font-weight: 700;
+  color: #222222;
+  margin-bottom: 12px;
+  border-bottom: 1px solid #f1f5f9;
+  padding-bottom: 6px;
+}
+
+.scrap-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  justify-items: center;
+}
+
+.scrap-card {
+  background-color: #ffffff;
+  border: 1px solid #eaeaea;
+  border-radius: 14px;
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 300px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+
+.scrap-card-content {
+  padding: 12px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.scrap-card-content strong {
+  font-size: 14px;
+  font-weight: 700;
+  color: #111111;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.scrap-card-content span {
+  font-size: 11px;
+  color: #777777;
+}
+
+.scrap-star-btn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: none;
+  border: none;
+  font-size: 18px;
+  z-index: 10;
+  line-height: 1;
+}
+.scrap-star-btn.active {
+  color: #FFC107;
+  text-shadow: 0 0 3px rgba(0,0,0,0.2);
+}
+
+.scrap-empty {
+  grid-column: span 2;
+  text-align: center;
+  font-size: 13px;
+  color: #94a3b8;
+  padding: 30px 0;
+  background-color: #f8fafc;
+  border-radius: 12px;
+  border: 1px dashed #e2e8f0;
+}
+
+.scrap-poster-img-box {
+  width: 100%;
+  aspect-ratio: 9 / 14; 
+  overflow: hidden;
+  background-color: #f8fafc;
+  border-radius: 12px; 
+}
+
+.scrap-poster-img-box img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.scrap-card.recipe-only-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+  max-width: 300px;
+  height: 110px;
+  padding: 16px 12px;
+}
+
+.scrap-grid-image-box {
+  display: none;
+}
+
+.footer {
+  width: 100vw;
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%); 
+  
+  margin-bottom: -50px;     
+  padding: 40px 60px 60px 60px;
+  
+  background-color: #e9e9e9; 
+  box-sizing: border-box;
+  margin-top: auto;          
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  display: flex;
+  justify-content: space-between; 
+  align-items: center;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.footerLogo {
+  font-size: 24px;
+  font-weight: 900;
+  color: #4CAF50;
+  letter-spacing: -0.5px;
+  text-transform: lowercase;
+  font-family: 'Poppins', sans-serif;
+}
+
+.footerText {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  text-align: right;
+}
+
+.footerText p {
+  margin: 0;
+  font-size: 13px;
+  color: #94a3b8;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+.footerText p:last-child {
+  color: #cbd5e1; 
+  font-size: 12px;
+  letter-spacing: 0.2px;
+}
+

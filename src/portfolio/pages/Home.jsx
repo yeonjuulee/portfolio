@@ -2,7 +2,7 @@ import Hero from "../components/Hero";
 import About from "../components/About";
 import Skills from "../components/Skills";
 import ProjectList from "../components/Projectlist";
-import { useToast } from "../context/Toastcontext";
+import { useToast } from "../context/ToastContext";
 
 export default function Home({ onOpenModal }) {
   const { showToast } = useToast();

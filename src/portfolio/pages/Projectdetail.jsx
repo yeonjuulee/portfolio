@@ -1,7 +1,7 @@
 import { Link, Navigate, useParams } from "react-router-dom";
-import CodeBlock from '../Codeblock';
-import { useToast } from '../context/Toastcontext';
-import { projects, getProjectBySlug } from '../data/Projects';
+import CodeBlock from "../components/CodeBlock";
+import { useToast } from "../context/ToastContext";
+import { getProjectBySlug, projects } from "../data/projects";
 
 const TOC = [
   { id: "overview", label: "개요" },
@@ -34,50 +34,71 @@ export default function ProjectDetail() {
 
   return (
     <article className="detail-page detail-page-static">
-      <div className="wrap detail-hero">
-        <div className="detail-eyebrow">
-          <Link to="/projects">← 전체 프로젝트</Link>
-        </div>
-        <div className="detail-thumb-lg" />
-        <h1 className="detail-title disp">{project.name}</h1>
-        <p className="detail-tagline">{project.tagline}</p>
-        <div className="detail-stack">
-          {project.stack.map((s) => (
-            <span key={s}>{s}</span>
-          ))}
-        </div>
-        <div className="detail-links">
-          <a
-            href={project.links.github}
-            className="btn btn-primary"
-            onClick={(e) => handlePlaceholderLink(e, project.links.github)}
-          >
-            GitHub 저장소
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
-              <path d="M7 17L17 7M17 7H8M17 7v9" />
-            </svg>
-          </a>
-          <a
-            href={project.links.demo}
-            className="btn btn-ghost"
-            onClick={(e) => handlePlaceholderLink(e, project.links.demo)}
-          >
-            웹사이트 바로가기
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
-              <path d="M7 17L17 7M17 7H8M17 7v9" />
-            </svg>
-          </a>
+      <div className="project-hero">
+        {/* 작업물 데모 영상을 배경에 깔고, 그 위에 20% 블랙 오버레이로 타이틀 가독성 확보 */}
+        <video
+          className="project-hero-video"
+          src={project.video}
+          autoPlay
+          muted
+          loop
+          playsInline
+        />
+        <div className="project-hero-overlay" />
+
+        <div className="wrap project-hero-content">
+          <div className="project-hero-left">
+            <div className="detail-eyebrow">
+              <Link to="/projects">← 전체 프로젝트</Link>
+            </div>
+            <h1 className="project-hero-title disp">{project.name}</h1>
+            <p className="project-hero-sub">{project.tagline}</p>
+
+            <div className="project-hero-meta">
+              <div>
+                <span className="meta-label">작업 인원</span>
+                <span>{project.team}</span>
+              </div>
+              <div>
+                <span className="meta-label">사용 기술</span>
+                <span>{project.stack.join(" · ")}</span>
+              </div>
+            </div>
+
+            <div className="detail-links">
+              <a
+                href={project.links.github}
+                className="btn btn-primary"
+                onClick={(e) => handlePlaceholderLink(e, project.links.github)}
+              >
+                GitHub 저장소
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+                  <path d="M7 17L17 7M17 7H8M17 7v9" />
+                </svg>
+              </a>
+              <a
+                href={project.links.demo}
+                className="btn btn-ghost"
+                onClick={(e) => handlePlaceholderLink(e, project.links.demo)}
+              >
+                웹사이트 바로가기
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+                  <path d="M7 17L17 7M17 7H8M17 7v9" />
+                </svg>
+              </a>
+            </div>
+          </div>
+
+          {/* 우측 목차 — 페이지 이동 없이 아래 해당 섹션으로 스크롤 이동 */}
+          <nav className="project-hero-toc">
+            {TOC.map((t) => (
+              <button key={t.id} onClick={() => scrollToSection(t.id)}>
+                {t.label}
+              </button>
+            ))}
+          </nav>
         </div>
       </div>
-
-      {/* 페이지 이동 없이 같은 페이지 내 스크롤 이동 */}
-      <nav className="detail-toc">
-        {TOC.map((t) => (
-          <button key={t.id} className="toc-link" onClick={() => scrollToSection(t.id)}>
-            {t.label}
-          </button>
-        ))}
-      </nav>
 
       <div className="wrap detail-body">
         <div className="detail-block" id="overview">

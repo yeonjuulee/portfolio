@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import ProjectRow from '../components/Projectrow';
-import { projects } from '../data/Projects';
+import { projects } from '../data/projects';
 
 export default function AllProjects() {
   return (

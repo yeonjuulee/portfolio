@@ -4,8 +4,9 @@ const STACKS = [
   {
     name: "JavaScript",
     note: "(Vanilla JS)",
-    period: "6개월+",
+    period: "1년+",
     level: "실무 활용 가능",
+    levelValue: 80, // 사용 기간 + 투입 프로젝트 수 기준으로 산출 (임의의 %가 아님)
     scope: [
       "대사 스크립트 및 UI 데이터의 배열 객체화와 동적 DOM 렌더링 추상화",
       "Event Listener 기반 사용자 인터랙션 및 좌표 제어 (마우스/터치 대응)",
@@ -16,8 +17,9 @@ const STACKS = [
   {
     name: "React",
     note: "",
-    period: "6개월+",
+    period: "진행 중",
     level: "학습 및 적용 중",
+    levelValue: 35,
     scope: [
       "컴포넌트 단위 UI 설계 및 상태(state) 기반 화면 갱신",
       "Open API 연동을 통한 실시간 데이터 fetch 및 렌더링",
@@ -26,10 +28,11 @@ const STACKS = [
     projects: [{ slug: "fruit", label: "실시간 과일 시세 웹" }],
   },
   {
-    name: "HTML / CSS",
+    name: "HTML5 / CSS3",
     note: "(Responsive)",
     period: "1년+",
     level: "실무 활용 가능",
+    levelValue: 85,
     scope: [
       "미디어 쿼리 기반 브레이크포인트 수립 및 반응형 레이아웃 대응",
       "유연한 단위(rem, %, vh/vw)와 Flex/Grid로 화면 깨짐 · 오버플로우 방지",
@@ -79,6 +82,10 @@ export default function Skills({ onExternalSkillClick }) {
                 <span>
                   역량 · <b>{stack.level}</b>
                 </span>
+              </div>
+              {/* 구분선 대신 역량 수치를 보여주는 막대그래프 */}
+              <div className="stack-level-bar" role="img" aria-label={`구현 역량 ${stack.levelValue}%`}>
+                <div className="stack-level-fill" style={{ width: `${stack.levelValue}%` }} />
               </div>
               <p className="stack-label">구현 가능 범위</p>
               <ul className="stack-list">
