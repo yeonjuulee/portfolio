@@ -53,6 +53,12 @@ a {
     padding: 0 32px;
 }
 
+.hero-wrap {
+  max-width: 1600px;
+    margin: 0 auto;
+    padding: 15vh 32px;
+}
+
 @media (max-width: 640px) {
     .wrap {
         padding: 0 20px;
@@ -529,7 +535,7 @@ section {
     display: flex;
     gap: 12px;
     flex-wrap: wrap;
-    margin: 44px 0 56px;
+    margin: 60px 0;
 }
 
 .btn {
@@ -613,7 +619,7 @@ section {
     gap: 12px;
     background: var(--accent);
     color: #fff;
-    padding: 26px;
+    padding: 42px;
     font-family: "Space Grotesk", sans-serif;
     font-weight: 600;
     font-size: 16px;
@@ -643,70 +649,74 @@ section {
     align-items: center;
 }
 
-/* 1. 상단 슬로건 섹션 */
+/* 1. 상단 슬로건 섹션 — 볼드 텍스트 박스가 겹쳐진 웨이브 배치 */
 .slogan-section {
     display: flex;
+    align-items: center;
     justify-content: center;
-    gap: 24px;
     flex-wrap: wrap;
     width: 100%;
-    margin-bottom: 72px;
-}
-
-.slogan-column {
-    display: flex;
-    flex-direction: column;
-    gap: 14px;
-}
-
-.slogan-column.right-col {
-    margin-top: 40px;
+    margin-bottom: 96px;
+    /* padding: 36px 0; */
 }
 
 .slogan-box {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    padding: 16px 28px;
-    border-radius: 30px;
-    font-size: 17px;
-    font-weight: 500;
+    position: relative;
+    background: var(--accent);
+    color: #fff;
+    border: 2px solid var(--accent);
+    font-family: "Space Grotesk", "Noto Sans KR", sans-serif;
+    font-weight: 900;
+    font-size: clamp(1.05rem, 2.1vw, 1.55rem);
+    letter-spacing: -0.01em;
+    padding: 15px 28px;
     white-space: nowrap;
 }
 
-.slogan-box.fill-blue {
-    background: var(--accent);
-    color: #fff;
+/* 1, 3번째: 중앙보다 위로 — 파란 배경 */
+.slogan-box.wave-1,
+.slogan-box.wave-3 {
+    transform: translateY(-22px);
+    z-index: 2;
 }
 
-.slogan-box.stroke-blue {
-    border: 1px solid var(--accent);
+/* 2, 4번째: 중앙보다 아래로 — 흰 배경 + 파란 테두리/글씨 */
+.slogan-box.wave-2,
+.slogan-box.wave-4 {
+    transform: translateY(22px);
+    background: #fff;
     color: var(--accent);
-    background: none;
+    z-index: 1;
 }
 
-.slogan-box.offset-left {
-    margin-left: 32px;
+.slogan-box.wave-1 {
+    margin-right: -28px;
 }
 
-.slogan-box.offset-right {
-    margin-right: 32px;
+.slogan-box.wave-2 {
+    margin-right: -28px;
 }
 
-@media (max-width: 640px) {
+.slogan-box.wave-3 {
+    margin-right: -28px;
+}
+
+@media (max-width: 760px) {
     .slogan-section {
         flex-direction: column;
-        align-items: center;
+        padding: 0;
     }
 
-    .slogan-column.right-col {
-        margin-top: 0;
-    }
-
-    .slogan-box.offset-left,
-    .slogan-box.offset-right {
-        margin-left: 0;
-        margin-right: 0;
+    .slogan-box {
+        transform: none !important;
+        margin-right: 0 !important;
+        width: 100%;
+        max-width: 320px;
+        text-align: center;
+        white-space: normal;
     }
 }
 

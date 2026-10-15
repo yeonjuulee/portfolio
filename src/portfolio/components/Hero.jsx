@@ -1,7 +1,7 @@
 export default function Hero({ onOpenModal }) {
   return (
     <section className="hero">
-      <div className="wrap">
+      <div className="hero-wrap">
         <div className="hero-top">
           <p className="hero-intro">
             <b>보는 사람의 입장에서 포트폴리오를 설계합니다.</b>필요한 정보를 빠르게 찾고, 결과물과 개발 과정을 직접 경험할 수 있도록 구성했습니다.

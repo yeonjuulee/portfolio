@@ -57,15 +57,10 @@ export default function About() {
     <div className="about-page">
       {/* 1. 상단 슬로건 섹션 */}
       <section className="slogan-section">
-        <div className="slogan-column left-col">
-          <div className="slogan-box fill-blue">사용자의 경험을</div>
-          <div className="slogan-box stroke-blue offset-left">고민하고</div>
-        </div>
-
-        <div className="slogan-column right-col">
-          <div className="slogan-box fill-blue">더 나은 방법을</div>
-          <div className="slogan-box stroke-blue offset-right">끊임없이 찾습니다</div>
-        </div>
+        <span className="slogan-box wave-1">사용자의 경험을</span>
+        <span className="slogan-box wave-2">고민하고</span>
+        <span className="slogan-box wave-3">더 나은 방법을</span>
+        <span className="slogan-box wave-4">끊임없이 찾습니다</span>
       </section>
 
       {/* 2. 중앙 프로필 다이어그램 섹션 */}
