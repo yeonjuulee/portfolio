@@ -1,27 +1,78 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
-import ProjectRow from './Projectrow';
-// 👇 [수정] Projects의 P를 대문자로 꼭 적어줘야 해!
-import { projects, getFeaturedProjects } from '../data/projects';
+import { getFeaturedProjects } from "../data/projects";
 
 export default function ProjectList() {
-  const featured = getFeaturedProjects();
+  const projects = getFeaturedProjects();
+  const [index, setIndex] = useState(0);
+  const project = projects[index];
+
+  const goTo = (i) => setIndex((i + projects.length) % projects.length);
+  const goPrev = () => goTo(index - 1);
+  const goNext = () => goTo(index + 1);
 
   return (
     <section id="projects">
       <div className="wrap">
-        <p className="eyebrow">Projects</p>
-        <h2 className="sec-title">핵심 프로젝트 2개를 먼저 소개합니다</h2>
+        <div className="my-project">
+          <div className="my-project-text">
+            <h2 className="my-project-title disp">
+              MY
+              <br />
+              Project <span className="my-project-bracket">(</span>
+            </h2>
 
-        {featured.map((project, i) => (
-          <ProjectRow key={project.slug} project={project} isFirst={i === 0} />
-        ))}
+            <div className="my-project-meta">
+              <p className="my-project-name">{project.name}</p>
+              <p className="my-project-stack">{project.stack.join(" · ")}</p>
+            </div>
 
-        <Link to="/projects" className="proj-row-all">
-          전체 프로젝트 보기
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
-            <path d="M7 17L17 7M17 7H8M17 7v9" />
-          </svg>
-        </Link>
+            <Link to="/projects" className="my-project-more disp">
+              More <span className="arrow">&gt;</span>
+            </Link>
+          </div>
+
+          <div className="my-project-media">
+            <div className="my-project-viewport">
+              <div
+                className="my-project-track"
+                style={{ transform: `translateY(-${index * 100}%)` }}
+              >
+                {projects.map((p) => (
+                  <Link
+                    key={p.slug}
+                    to={`/project/${p.slug}`}
+                    className="my-project-slide"
+                  >
+                    {p.video ? (
+                      <video
+                        className="my-project-video"
+                        src={p.video}
+                        autoPlay
+                        muted
+                        loop
+                        playsInline
+                      />
+                    ) : (
+                      <div className="my-project-placeholder" />
+                    )}
+                  </Link>
+                ))}
+              </div>
+            </div>
+
+            <div className="my-project-nav">
+              <button type="button" onClick={goPrev} aria-label="이전 프로젝트">
+                ↑
+              </button>
+              <button type="button" onClick={goNext} aria-label="다음 프로젝트">
+                ↓
+              </button>
+            </div>
+          </div>
+
+          <span className="my-project-bracket my-project-bracket-close disp">)</span>
+        </div>
       </div>
     </section>
   );

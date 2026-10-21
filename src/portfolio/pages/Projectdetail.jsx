@@ -111,7 +111,7 @@ export default function ProjectDetail() {
         </div>
         <div className="detail-block" id="code">
           <h5>핵심 코드</h5>
-          <CodeBlock lines={project.code} caption={project.codeCaption} />
+          <CodeBlock groups={project.code} caption={project.codeCaption} />
         </div>
       </div>
 

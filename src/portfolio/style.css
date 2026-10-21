@@ -50,13 +50,7 @@ a {
 .wrap {
     max-width: 1600px;
     margin: 0 auto;
-    padding: 0 32px;
-}
-
-.hero-wrap {
-  max-width: 1600px;
-    margin: 0 auto;
-    padding: 15vh 32px;
+    padding: 100px 32px;
 }
 
 @media (max-width: 640px) {
@@ -123,7 +117,7 @@ button {
 .gnb-links a {
     display: inline-block;
     padding: 9px 14px;
-    font-size: 12.5px;
+    font-size: 14px;
     letter-spacing: .06em;
     color: var(--ink-soft);
     border-radius: var(--radius);
@@ -138,7 +132,7 @@ button {
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    font-size: 13px;
+    font-size: 14.5px;
     color: var(--ink-soft);
     padding: 9px 4px;
 }
@@ -161,7 +155,7 @@ button {
     color: var(--panel-ink);
     padding: 9px 14px;
     border-radius: 20px;
-    font-size: 12.5px;
+    font-size: 14px;
 }
 
 .drawer-btn:hover {
@@ -232,7 +226,7 @@ button {
 
 .drawer-head span {
     font-family: "Space Grotesk", sans-serif;
-    font-size: 15px;
+    font-size: 16px;
     font-weight: 700;
 }
 
@@ -291,13 +285,13 @@ button {
 }
 
 .drawer-role {
-    font-size: 13px;
+    font-size: 14.5px;
     color: var(--ink-soft);
     margin: 0 0 16px;
 }
 
 .drawer-slogan {
-    font-size: 14.5px;
+    font-size: 16px;
     line-height: 1.65;
     padding: 16px;
     background: var(--surface);
@@ -316,7 +310,7 @@ button {
     display: inline-flex;
     align-items: center;
     gap: 6px;
-    font-size: 12.5px;
+    font-size: 14px;
     padding: 7px 12px;
     border: 1px solid var(--line);
     border-radius: 20px;
@@ -330,7 +324,7 @@ button {
 }
 
 .drawer-label {
-    font-size: 11.5px;
+    font-size: 13px;
     letter-spacing: .05em;
     color: var(--ink-soft);
     margin: 0 0 8px;
@@ -344,7 +338,7 @@ button {
 }
 
 .chip {
-    font-size: 12px;
+    font-size: 13.5px;
     padding: 5px 10px;
     border: 1px solid var(--line-strong);
     border-radius: 20px;
@@ -389,12 +383,12 @@ button {
 
 .mini-card h5 {
     margin: 0 0 4px;
-    font-size: 13.5px;
+    font-size: 15px;
 }
 
 .mini-card p {
     margin: 0;
-    font-size: 12px;
+    font-size: 13.5px;
     color: var(--ink-soft);
 }
 
@@ -407,7 +401,7 @@ button {
     border-radius: 24px;
     background: var(--accent);
     color: #fff;
-    font-size: 13.5px;
+    font-size: 15px;
     font-weight: 500;
     border: none;
 }
@@ -422,7 +416,7 @@ button {
     color: #fff;
     padding: 12px 20px;
     border-radius: 24px;
-    font-size: 13.5px;
+    font-size: 15px;
     z-index: 900;
     opacity: 0;
     pointer-events: none;
@@ -440,7 +434,7 @@ section {
 }
 
 .eyebrow {
-    font-size: 12px;
+    font-size: 13.5px;
     letter-spacing: .08em;
     color: var(--accent);
     margin: 0 0 14px;
@@ -471,7 +465,7 @@ section {
 }
 
 .sec-note {
-    font-size: 13px;
+    font-size: 15px;
     color: var(--ink-soft);
     margin: 0 0 48px;
     max-width: 560px;
@@ -481,6 +475,120 @@ section {
 .hero {
     padding: 150px 0 0;
     border-bottom: 1px solid var(--line);
+}
+
+/* 시작 페이지 레이아웃 — 이름/연결선/슬로건 링크(좌) + 스택형 스탯 카드 2개(우) */
+.hero-grid {
+    display: grid;
+    grid-template-columns: 1fr 430px;
+    gap: 60px;
+    align-items: start;
+    padding: 56px 0 90px;
+}
+
+@media (max-width: 860px) {
+    .hero-grid {
+        grid-template-columns: 1fr;
+        gap: 40px;
+        padding: 40px 0 60px;
+    }
+}
+
+.hero-left {
+    padding-top: 6px;
+}
+
+.hero-name {
+    font-size: clamp(2.3rem, 5.5vw, 4.1rem);
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    margin: 0 0 26px;
+}
+
+.hero-connector {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 16px;
+    margin: 0 0 26px;
+}
+
+.hero-connector-line {
+    width: 1px;
+    height: 86px;
+    background: var(--ink);
+}
+
+.hero-connector-arrow {
+    font-size: 16px;
+    line-height: 1;
+    margin-top: -3px;
+}
+
+.hero-slogan-link {
+    display: inline-block;
+    background: none;
+    border: none;
+    padding: 0;
+    text-align: left;
+    font-family: "Noto Sans KR", sans-serif;
+    font-size: clamp(1.1rem, 2.2vw, 1.5rem);
+    font-weight: 500;
+    line-height: 1.55;
+    text-decoration: underline;
+    text-underline-offset: 6px;
+    color: var(--ink);
+    cursor: pointer;
+}
+
+.hero-slogan-link:hover,
+.hero-slogan-link:focus-visible {
+    color: var(--accent);
+}
+
+.hero-slogan-link .arrow {
+    margin-left: 4px;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.hero-right {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+@media (max-width: 860px) {
+    .hero-right {
+        flex-direction: row;
+    }
+
+    .hero-right .stat-card {
+        flex: 1;
+    }
+}
+
+@media (max-width: 560px) {
+    .hero-right {
+        flex-direction: column;
+    }
+}
+
+.hero-right .stat-card {
+    min-height: 230px;
+    padding: 36px 34px 28px;
+}
+
+.hero-right .stat-num {
+    font-size: clamp(3.2rem, 6vw, 5.4rem);
+}
+
+.stat-card-accent {
+    background: var(--accent);
+}
+
+.stat-card-accent .stat-label {
+    color: rgba(255, 255, 255, .85);
 }
 
 .hero-top {
@@ -498,7 +606,7 @@ section {
 }
 
 .hero-intro {
-    font-size: 13.5px;
+    font-size: 15.5px;
     color: var(--ink-soft);
     line-height: 1.8;
     padding-top: 10px;
@@ -535,7 +643,7 @@ section {
     display: flex;
     gap: 12px;
     flex-wrap: wrap;
-    margin: 60px 0;
+    margin: 44px 0 56px;
 }
 
 .btn {
@@ -544,7 +652,7 @@ section {
     gap: 8px;
     padding: 13px 24px;
     border-radius: 30px;
-    font-size: 14px;
+    font-size: 15px;
     border: 1px solid var(--line-strong);
     background: none;
     color: var(--ink);
@@ -585,7 +693,7 @@ section {
 }
 
 .stat-card {
-    background: var(--panel);
+    background: #3d38f5;
     color: #fff;
     border-radius: var(--radius-lg);
     padding: 32px 30px 26px;
@@ -608,7 +716,7 @@ section {
 }
 
 .stat-label {
-    font-size: 13.5px;
+    font-size: 15px;
     color: #c9c9cc;
 }
 
@@ -619,7 +727,7 @@ section {
     gap: 12px;
     background: var(--accent);
     color: #fff;
-    padding: 42px;
+    padding: 26px;
     font-family: "Space Grotesk", sans-serif;
     font-weight: 600;
     font-size: 16px;
@@ -657,7 +765,7 @@ section {
     flex-wrap: wrap;
     width: 100%;
     margin-bottom: 96px;
-    /* padding: 36px 0; */
+    padding: 36px 0;
 }
 
 .slogan-box {
@@ -670,9 +778,9 @@ section {
     border: 2px solid var(--accent);
     font-family: "Space Grotesk", "Noto Sans KR", sans-serif;
     font-weight: 900;
-    font-size: clamp(1.05rem, 2.1vw, 1.55rem);
+    font-size: clamp(1.5rem, 3vw, 2.3rem);
     letter-spacing: -0.01em;
-    padding: 15px 28px;
+    padding: 18px 32px;
     white-space: nowrap;
 }
 
@@ -762,7 +870,7 @@ section {
 }
 
 .card-body {
-    font-size: 15px;
+    font-size: 16.5px;
     font-weight: 500;
 }
 
@@ -770,7 +878,7 @@ section {
     display: flex;
     flex-direction: column;
     gap: 2px;
-    font-size: 13.5px;
+    font-size: 15px;
     font-weight: 400;
     color: var(--ink-soft);
 }
@@ -780,23 +888,31 @@ section {
     z-index: 2;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    gap: 10px;
+    align-items: flex-start;
 }
 
+/* WHO? 태그 — 이름/전공 태그와 같은 스타일로, 박스 위쪽 모서리에 겹쳐서 올라감 */
 .center-tag {
+    position: absolute;
+    top: -16px;
+    left: -4px;
+    z-index: 3;
+    display: inline-block;
+    background: var(--accent);
+    color: #fff;
     font-family: "Space Grotesk", sans-serif;
     font-weight: 700;
-    font-size: 13px;
-    letter-spacing: .05em;
-    color: var(--ink-soft);
+    font-size: 14px;
+    letter-spacing: .02em;
+    padding: 5px 14px;
 }
 
 .center-photo-frame {
-    width: 160px;
-    height: 200px;
+    width: 190px;
+    height: 240px;
     background: var(--surface);
     border: 1px solid var(--line-strong);
+    margin-top: 14px;
 }
 
 @media (max-width: 640px) {
@@ -824,7 +940,7 @@ section {
 }
 
 .intro-line {
-    font-size: 14.5px;
+    font-size: 16.5px;
     color: var(--ink-soft);
     line-height: 1.8;
     margin: 0 0 8px;
@@ -842,7 +958,7 @@ section {
 }
 
 .timeline-title {
-    font-size: 12px;
+    font-size: 13.5px;
     letter-spacing: .06em;
     color: var(--accent);
     font-weight: 500;
@@ -891,12 +1007,12 @@ section {
 
 .timeline-date {
     font-family: "JetBrains Mono", monospace;
-    font-size: 12.5px;
+    font-size: 14px;
     color: var(--accent);
 }
 
 .timeline-text {
-    font-size: 15px;
+    font-size: 16.5px;
     font-weight: 500;
 }
 
@@ -909,7 +1025,7 @@ section {
 }
 
 .download-link {
-    font-size: 14px;
+    font-size: 15.5px;
     color: var(--ink);
 }
 
@@ -917,7 +1033,120 @@ section {
     color: var(--accent);
 }
 
-/* Skills */
+/* Skills — 기술별 가로 바 그래프 (숙련도 비율만큼 채움 + 호버 시 구현 가능 범위 표시) */
+.stack-bars {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    margin-bottom: 20px;
+}
+
+.stack-bar-row {
+    position: relative;
+    outline: none;
+}
+
+.stack-bar-track {
+    display: flex;
+    align-items: stretch;
+    height: 84px;
+    border-radius: var(--radius);
+    overflow: hidden;
+}
+
+.stack-bar-fill {
+    flex: none;
+    display: flex;
+    align-items: center;
+    padding: 0 26px;
+    background: var(--accent);
+    transition: filter .2s ease;
+}
+
+.stack-bar-name {
+    font-size: clamp(1.3rem, 2.6vw, 2rem);
+    font-weight: 700;
+    color: #fff;
+    white-space: nowrap;
+}
+
+.stack-bar-period {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 0 26px;
+    background: var(--accent-soft);
+    min-width: 110px;
+}
+
+.stack-bar-period span {
+    font-size: clamp(1rem, 2vw, 1.4rem);
+    font-weight: 700;
+    color: var(--ink);
+    white-space: nowrap;
+}
+
+.stack-bar-row:hover .stack-bar-fill,
+.stack-bar-row:focus-visible .stack-bar-fill {
+    filter: brightness(1.08);
+}
+
+.stack-bar-tooltip {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: calc(100% + 8px);
+    z-index: 20;
+    background: var(--bg);
+    border: 1px solid var(--line-strong);
+    border-radius: var(--radius);
+    padding: 22px 26px;
+    box-shadow: 0 16px 40px rgba(13, 13, 13, .14);
+    opacity: 0;
+    transform: translateY(-6px);
+    pointer-events: none;
+    transition: opacity .18s ease, transform .18s ease;
+}
+
+.stack-bar-row:hover .stack-bar-tooltip,
+.stack-bar-row:focus-within .stack-bar-tooltip,
+.stack-bar-row:focus-visible .stack-bar-tooltip {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+}
+
+.stack-bar-tooltip .stack-list {
+    margin-bottom: 16px;
+}
+
+.stack-bar-tooltip .stack-list:last-child,
+.stack-bar-tooltip .stack-tags {
+    margin-bottom: 0;
+}
+
+@media (max-width: 640px) {
+    .stack-bar-track {
+        height: auto;
+        flex-direction: column;
+    }
+
+    .stack-bar-fill,
+    .stack-bar-period {
+        width: 100% !important;
+        padding: 14px 18px;
+    }
+
+    .stack-bar-period {
+        justify-content: flex-start;
+    }
+}
+
+.stack-card-tools {
+    border: 1px solid var(--line-strong);
+}
+
 .stack-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -959,7 +1188,7 @@ section {
 }
 
 .stack-meta span {
-    font-size: 12.5px;
+    font-size: 14px;
     color: var(--ink-soft);
 }
 
@@ -984,7 +1213,7 @@ section {
 }
 
 .stack-label {
-    font-size: 11px;
+    font-size: 13px;
     letter-spacing: .05em;
     color: var(--ink-soft);
     margin: 0 0 10px;
@@ -1001,7 +1230,7 @@ section {
     gap: 10px;
     padding: 9px 0;
     border-top: 1px solid var(--line);
-    font-size: 14px;
+    font-size: 15.5px;
 }
 
 .stack-list li:first-child {
@@ -1023,7 +1252,7 @@ section {
 }
 
 .stack-tag {
-    font-size: 12px;
+    font-size: 13.5px;
     padding: 5px 10px;
     border: 1px solid var(--line-strong);
     border-radius: 20px;
@@ -1043,7 +1272,7 @@ section {
     margin-top: auto;
     padding-top: 18px;
     border-top: 1px solid var(--line);
-    font-size: 13.5px;
+    font-size: 15px;
     background: none;
     border-left: none;
     border-right: none;
@@ -1058,6 +1287,303 @@ section {
 .skill-external svg {
     width: 16px;
     height: 16px;
+}
+
+/* Tech Stack — 가로 바 그래프 버전 (기간 기준 막대 + 호버 시 구현 가능 범위 표시) */
+.skill-bars {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    margin-bottom: 36px;
+}
+
+.skill-bar-row {
+    position: relative;
+    display: flex;
+    align-items: stretch;
+    height: 92px;
+    cursor: pointer;
+}
+
+.skill-bar-fill {
+    background: var(--accent);
+    display: flex;
+    align-items: center;
+    padding: 0 28px;
+    min-width: 140px;
+    transition: filter .2s ease;
+}
+
+.skill-bar-row:hover .skill-bar-fill,
+.skill-bar-row:focus-within .skill-bar-fill {
+    filter: brightness(1.08);
+}
+
+.skill-bar-name {
+    font-weight: 800;
+    font-size: clamp(1.25rem, 2.8vw, 2rem);
+    color: var(--ink);
+    white-space: nowrap;
+}
+
+.skill-bar-duration {
+    flex: 1;
+    background: var(--accent-soft);
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 0 28px;
+}
+
+.skill-bar-duration-text {
+    font-weight: 800;
+    font-size: clamp(1.05rem, 2.2vw, 1.5rem);
+    color: var(--ink);
+    white-space: nowrap;
+}
+
+.skill-bar-tooltip {
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 0;
+    right: 0;
+    z-index: 20;
+    background: var(--panel);
+    color: #fff;
+    border-radius: var(--radius);
+    padding: 18px 22px;
+    box-shadow: 0 16px 36px rgba(13, 13, 13, .22);
+}
+
+.skill-bar-tooltip-label {
+    font-size: 11px;
+    letter-spacing: .06em;
+    color: var(--accent);
+    margin: 0 0 10px;
+    font-weight: 600;
+}
+
+.skill-bar-tooltip-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+
+.skill-bar-tooltip-list li {
+    font-size: 13.5px;
+    line-height: 1.5;
+    padding-left: 16px;
+    position: relative;
+}
+
+.skill-bar-tooltip-list li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 8px;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+}
+
+.skill-external-wrap {
+    display: flex;
+    justify-content: center;
+}
+
+@media (max-width: 640px) {
+    .skill-bar-row {
+        height: auto;
+        flex-direction: column;
+    }
+
+    .skill-bar-fill,
+    .skill-bar-duration {
+        width: 100% !important;
+        padding: 14px 20px;
+    }
+
+    .skill-bar-duration {
+        justify-content: flex-start;
+    }
+
+    .skill-bar-tooltip {
+        position: static;
+        margin-top: 2px;
+        box-shadow: none;
+    }
+}
+
+/* MY Project ( ) — 핵심 프로젝트 2개를 세로 슬라이드로 보여주는 쇼케이스 */
+.my-project {
+    display: flex;
+    align-items: stretch;
+    justify-content: space-between;
+    gap: 32px;
+    max-width: 1240px;
+    margin: 0 auto;
+}
+
+@media (max-width: 760px) {
+    .my-project {
+        flex-direction: column;
+        gap: 36px;
+    }
+}
+
+.my-project-text {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    flex: none;
+}
+
+.my-project-title {
+    font-size: clamp(2.6rem, 6vw, 5rem);
+    font-weight: 700;
+    line-height: 1.05;
+    color: var(--accent);
+    margin: 0;
+}
+
+.my-project-bracket {
+    display: inline-block;
+    color: var(--accent);
+}
+
+.my-project-bracket-close {
+    font-size: clamp(2.6rem, 6vw, 5rem);
+    font-weight: 700;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+}
+
+@media (max-width: 760px) {
+    .my-project-bracket-close {
+        display: none;
+    }
+}
+
+.my-project-meta {
+    margin: 24px 0 0;
+}
+
+.my-project-name,
+.my-project-stack {
+    display: block;
+    margin: 0 0 6px;
+    font-size: 15px;
+    color: var(--accent);
+    text-decoration: underline;
+    text-underline-offset: 4px;
+}
+
+.my-project-more {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--accent);
+    margin-top: auto;
+    padding-top: 32px;
+}
+
+.my-project-more:hover {
+    opacity: .75;
+}
+
+.my-project-media {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.my-project-viewport {
+    position: relative;
+    width: 460px;
+    max-width: 60vw;
+    height: 400px;
+    overflow: hidden;
+    border-radius: var(--radius);
+    background: var(--surface);
+}
+
+.my-project-viewport::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 90px;
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 0), var(--bg) 92%);
+    pointer-events: none;
+}
+
+.my-project-track {
+    display: flex;
+    flex-direction: column;
+    transition: transform .45s cubic-bezier(.2, .8, .3, 1);
+}
+
+.my-project-slide {
+    flex: none;
+    width: 340px;
+    max-width: 60vw;
+    height: 260px;
+    background: var(--surface);
+    display: block;
+}
+
+.my-project-video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.my-project-placeholder {
+    width: 100%;
+    height: 100%;
+    background: var(--surface);
+}
+
+.my-project-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.my-project-nav button {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    border: 1px solid var(--line-strong);
+    background: var(--bg);
+    font-size: 14px;
+    color: var(--ink);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.my-project-nav button:hover {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #fff;
+}
+
+@media (max-width: 760px) {
+    .my-project-viewport,
+    .my-project-slide {
+        width: 100%;
+        max-width: 100%;
+    }
 }
 
 /* Project rows */
@@ -1089,13 +1615,13 @@ section {
 
 .proj-name {
     font-family: "Space Grotesk", sans-serif;
-    font-size: 17px;
+    font-size: 18px;
     font-weight: 700;
     margin: 0 0 5px;
 }
 
 .proj-tagline {
-    font-size: 13.5px;
+    font-size: 15px;
     color: var(--ink-soft);
     margin: 0;
 }
@@ -1113,7 +1639,7 @@ section {
 }
 
 .proj-stack span {
-    font-size: 11px;
+    font-size: 12.5px;
     padding: 4px 9px;
     border: 1px solid var(--line-strong);
     border-radius: 20px;
@@ -1142,7 +1668,7 @@ section {
     border: 1px dashed var(--line-strong);
     font-family: "Space Grotesk", sans-serif;
     font-weight: 600;
-    font-size: 14px;
+    font-size: 15.5px;
     margin-top: 16px;
     border-radius: var(--radius);
 }
@@ -1181,7 +1707,7 @@ section {
 }
 
 .detail-eyebrow a {
-    font-size: 13px;
+    font-size: 14.5px;
     color: var(--ink-soft);
 }
 
@@ -1197,7 +1723,7 @@ section {
 }
 
 .detail-tagline {
-    font-size: 16px;
+    font-size: 17.5px;
     color: var(--ink-soft);
     max-width: 600px;
     margin: 0 0 24px;
@@ -1275,7 +1801,7 @@ section {
 }
 
 .project-hero-sub {
-    font-size: 16px;
+    font-size: 17.5px;
     color: rgba(255, 255, 255, .85);
     max-width: 560px;
     margin: 0 0 28px;
@@ -1295,13 +1821,13 @@ section {
 }
 
 .meta-label {
-    font-size: 11px;
+    font-size: 12.5px;
     letter-spacing: .05em;
     color: rgba(255, 255, 255, .6);
 }
 
 .project-hero-meta span:not(.meta-label) {
-    font-size: 14px;
+    font-size: 15.5px;
     color: #fff;
 }
 
@@ -1337,7 +1863,7 @@ section {
     background: rgba(255, 255, 255, .08);
     border: 1px solid rgba(255, 255, 255, .35);
     color: #fff;
-    font-size: 13px;
+    font-size: 14.5px;
     padding: 10px 16px;
     border-radius: 20px;
     text-align: left;
@@ -1373,7 +1899,7 @@ section {
 }
 
 .detail-block p {
-    font-size: 15.5px;
+    font-size: 17px;
     line-height: 1.8;
     margin: 0;
 }
@@ -1394,7 +1920,7 @@ section {
     border-radius: 20px;
     border: 1px solid var(--line-strong);
     background: var(--bg);
-    font-size: 13px;
+    font-size: 14.5px;
     color: var(--ink);
 }
 
@@ -1416,8 +1942,53 @@ section {
 }
 
 .code-toolbar .hint {
-    font-size: 12.5px;
+    font-size: 14px;
     color: var(--ink-soft);
+}
+
+/* 핵심 코드 — 주석 단위로 묶인 그룹별 타이틀/서브타이틀 + 코드 블록 */
+.code-group {
+    margin-bottom: 28px;
+}
+
+.code-group:last-child {
+    margin-bottom: 0;
+}
+
+.code-group-head {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 10px;
+}
+
+.code-group-title {
+    font-size: 16.5px;
+    font-weight: 700;
+    margin: 0;
+    color: var(--ink);
+}
+
+.code-group-tag {
+    display: inline-flex;
+    align-items: center;
+    font-size: 12.5px;
+    font-weight: 600;
+    padding: 4px 11px;
+    border-radius: 20px;
+    background: var(--surface);
+    color: var(--ink-soft);
+}
+
+.code-group-tag.ai {
+    background: var(--accent-soft);
+    color: var(--accent);
+}
+
+.code-group.show-ai .code-block {
+    box-shadow: inset 3px 0 0 var(--accent);
+    background: #15133f;
 }
 
 .code-block {
@@ -1431,7 +2002,7 @@ section {
 
 .code-lines {
     font-family: "JetBrains Mono", monospace;
-    font-size: 12.5px;
+    font-size: 13.5px;
     line-height: 1.75;
 }
 
@@ -1448,7 +2019,7 @@ section {
 }
 
 .code-caption {
-    font-size: 13px;
+    font-size: 14.5px;
     color: var(--ink-soft);
     margin: 0 0 28px;
 }
@@ -1464,7 +2035,7 @@ section {
 }
 
 .detail-nav a {
-    font-size: 14px;
+    font-size: 15.5px;
     color: var(--ink-soft);
     display: flex;
     align-items: center;
@@ -1498,7 +2069,7 @@ section {
 }
 
 .footer-note p {
-    font-size: 15px;
+    font-size: 16.5px;
     color: #b9b9bd;
     max-width: 340px;
     margin: 0;
@@ -1536,7 +2107,7 @@ section {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    font-size: 12px;
+    font-size: 13.5px;
     color: #8b8b90;
     flex-wrap: wrap;
     gap: 10px;

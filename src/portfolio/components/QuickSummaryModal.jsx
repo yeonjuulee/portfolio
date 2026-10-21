@@ -79,7 +79,9 @@ export default function QuickSummaryModal({ isOpen, onClose }) {
             </Link>
           </div>
 
-          <button className="drawer-cta">자기소개서 PDF 다운로드</button>
+          <a href="/pdf/yeonju.pdf" target="_blank" rel="noopener noreferrer">
+            <button className="drawer-cta">자기소개서 PDF 보기</button>
+          </a>
         </div>
       </div>
     </div>
