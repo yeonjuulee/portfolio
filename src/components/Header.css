@@ -1,0 +1,136 @@
+.header {
+  position: sticky;
+  top: env(safe-area-inset-top, 0px);
+  z-index: 50;
+  background: rgba(250, 250, 253, 0.88);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--line);
+}
+
+.header__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  position: relative;
+  min-height: var(--header-h);
+}
+
+.header__brand {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.15;
+}
+
+.header__logo {
+  font-family: var(--font-display);
+  font-stretch: 80%;
+  font-weight: 600;
+  font-size: 24px;
+  letter-spacing: 0.02em;
+}
+
+.header__role {
+  font-family: var(--font-mono);
+  font-size: 14px;
+  color: var(--ink-2);
+}
+
+.header__nav {
+  display: flex;
+  gap: 4px;
+  padding: 4px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--card);
+}
+
+.header__nav a {
+  position: relative;
+  padding: 8px 18px;
+  border-radius: 999px;
+  font-size: 15.5px;
+  font-weight: 400;
+  color: var(--ink-2);
+  white-space: nowrap;
+}
+
+.header__nav a:hover {
+  color: var(--ink);
+}
+
+.header__nav a.is-active {
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-weight: 500;
+}
+
+
+.header__cta {
+  min-height: 44px;
+  padding: 0 20px;
+  font-size: 15px;
+}
+
+.header__menu {
+  display: none;
+  min-height: 44px;
+  padding: 0 18px;
+  border: 1.5px solid var(--ink);
+  border-radius: 999px;
+  background: var(--card);
+  font-size: 15px;
+  font-weight: 500;
+}
+
+@media (max-width: 820px) {
+  :root {
+    --header-h: 64px;
+  }
+
+  .header__brand {
+    margin-right: auto;
+  }
+
+  .header__menu {
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .header__cta {
+    min-height: 44px;
+  }
+
+  /* 메뉴는 버튼을 눌렀을 때만 펼쳐집니다. */
+  .header__nav {
+    display: none;
+    position: absolute;
+    top: calc(100% + 8px);
+    left: max(20px, env(safe-area-inset-left, 0px));
+    right: max(20px, env(safe-area-inset-right, 0px));
+    flex-direction: column;
+    gap: 2px;
+    padding: 8px;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lift);
+  }
+
+  .header__nav.is-open {
+    display: flex;
+  }
+
+  .header__nav a {
+    padding: 13px 16px;
+    font-size: 17px;
+  }
+}
+
+@media (max-width: 420px) {
+  .header__role {
+    display: none;
+  }
+
+  .header__inner {
+    gap: 12px;
+  }
+}

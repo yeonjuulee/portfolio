@@ -1,0 +1,59 @@
+.facts {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.fact {
+  min-width: 0;
+  padding: 28px 32px 30px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  background: var(--card);
+}
+
+.fact__num {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+  font-family: var(--font-display);
+  font-stretch: 75%;
+  font-weight: 600;
+  font-size: clamp(3.4rem, 6vw, 5.4rem);
+  line-height: 0.95;
+  letter-spacing: -0.02em;
+}
+
+.fact__num small {
+  font-family: var(--font-body);
+  font-stretch: 100%;
+  font-size: clamp(1.1rem, 1.6vw, 1.5rem);
+  font-weight: 500;
+  letter-spacing: 0;
+}
+
+.fact__label {
+  margin-top: 14px;
+  font-size: 16.5px;
+  font-weight: 500;
+}
+
+.fact__sub {
+  margin-top: 2px;
+  font-size: 14.5px;
+  color: var(--ink-2);
+}
+
+@media (max-width: 520px) {
+  .fact {
+    padding: 16px 16px 18px;
+  }
+
+  .fact__num {
+    font-size: 2.9rem;
+  }
+
+  .fact__sub {
+    font-size: 13.5px;
+  }
+}

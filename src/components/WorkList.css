@@ -1,0 +1,181 @@
+.work__filters {
+  display: flex;
+  gap: 8px;
+}
+
+.work__filter {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 42px;
+  padding: 0 16px;
+  border: 1.5px solid var(--ink);
+  border-radius: 999px;
+  background: transparent;
+  font-size: 15.5px;
+  font-weight: 500;
+}
+
+.work__filter span {
+  font-family: var(--font-mono);
+  font-size: 14px;
+  font-weight: 400;
+  opacity: 0.7;
+}
+
+.work__filter:hover {
+  background: var(--accent-soft);
+}
+
+.work__filter.is-on {
+  background: var(--ink);
+  color: #fff;
+}
+
+.work__filters {
+  flex-wrap: wrap;
+}
+
+/* 계단식 2열: 오른쪽 열을 아래로 밀어 엇갈리게 배치 */
+.work__stairs {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  width: min(100%, 1120px);
+  margin-inline: auto;
+  gap: clamp(24px, 5vw, 96px);
+  align-items: start;
+}
+
+.work__col {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(64px, 8vw, 128px);
+}
+
+.work__col:nth-child(2) {
+  padding-top: clamp(72px, 10vw, 160px);
+}
+
+@media (max-width: 720px) {
+  .work__stairs {
+    display: flex;
+    flex-direction: column;
+    gap: 44px;
+  }
+
+  .work__col {
+    display: contents;
+  }
+
+  .work__col > li {
+    order: var(--o);
+  }
+
+  .work__col:nth-child(2) {
+    padding-top: 0;
+  }
+}
+
+.work-card {
+  display: block;
+}
+
+.work-card__media {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+}
+
+.work-card__media .gray-box {
+  transition: transform 0.35s ease;
+}
+
+.work-card:hover .work-card__media .gray-box {
+  transform: scale(1.03);
+}
+
+/* 평소에는 살짝 어둡게(검정 15%), 마우스를 올리면 원래 밝기로 */
+.work-card__media::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: rgba(0, 0, 0, 0.15);
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.work-card:hover .work-card__media::after,
+.work-card:focus-visible .work-card__media::after {
+  opacity: 0;
+}
+
+.work-card__go {
+  z-index: 2;
+  position: absolute;
+  right: 14px;
+  bottom: 14px;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--ink);
+  color: #fff;
+  font-size: 20px;
+  font-weight: 500;
+  transition: background 0.15s ease, transform 0.15s ease;
+}
+
+.work-card:hover .work-card__go {
+  background: var(--accent);
+  transform: translateX(3px);
+}
+
+.work-card__body {
+  padding-top: 18px;
+}
+
+.work-card__top {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 4px 16px;
+}
+
+.work-card__top h3 {
+  font-size: 26px;
+  font-weight: 600;
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+}
+
+.work-card:hover .work-card__top h3 {
+  color: var(--accent);
+}
+
+.work-card__year {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-mono);
+  font-size: 14px;
+  color: var(--ink-2);
+}
+
+.work-card__body > p {
+  margin-top: 6px;
+  font-size: 16px;
+  line-height: 1.55;
+  color: var(--ink-2);
+}
+
+.work-card__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 14px;
+}
