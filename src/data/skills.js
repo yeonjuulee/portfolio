@@ -62,13 +62,6 @@ export const skills = [
     scope: "벡터 일러스트 · 캐릭터 · 오브젝트 드로잉",
     projects: ["enneagram"],
   },
-  {
-    name: "UI/UX 디자인",
-    category: "디자인",
-    months: 6,
-    scope: "정보 구조 · 화면 설계 · 사용자 흐름",
-    projects: ["canada-aurora"],
-  },
 ];
 
 export const tools = [

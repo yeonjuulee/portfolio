@@ -24,6 +24,7 @@ export const projects = [
     status: "진행 중",
     stack: ["HTML5", "CSS3", "JavaScript"], // 실제 사용 기술로 교체
     links: { github: "#", demo: "#" },
+    thumb: "/images/projects/oreum/thumb.png",
     video: "",
     problem: "하나의 AI에 여러 수정사항을 한 번에 요청하면 일부 요구사항이 누락되거나 의도와 다르게 반영됐습니다.",
     solution: "수정 작업을 컴포넌트 단위로 나누고, 보조 AI로 수정 목적과 변경 범위를 먼저 정리한 뒤 메인 AI에 전달했습니다. 구현 결과는 별도의 AI로 검토했습니다.",
@@ -45,6 +46,12 @@ export const projects = [
     stack: ["HTML5", "CSS3", "JavaScript", "VanillaTilt"],
     links: { github: "https://github.com/nfuoah/nop.", demo: "https://nfuoah.github.io/nop./" },
     thumb: "/images/projects/nop/thumb.jpg", // 썸네일 · 상세 대표 이미지
+    screens: [
+      "/images/projects/nop/1.png",
+      "/images/projects/nop/2.png",
+      "/images/projects/nop/3.png",
+      "/images/projects/nop/4.png",
+],
     video: "/video/NOP.mp4",
     overview: "외국인 관광객이 부당 요금 피해를 예방할 수 있도록 돕는 NOP 서비스의 핵심 기능(스캔, 지도, 시세, 신고)을 직관적으로 소개하는 웹 랜딩페이지입니다.",
     process: "IntersectionObserver API를 적용해 스크롤 시점에 맞춘 차트 애니메이션으로 렌더링 성능을 최적화하고, 무한 슬라이더 구현 시 DOM 재배치 기법으로 메모리 효율을 극대화했습니다. 또한 백엔드 API 없이도 사용자가 실제 카메라인 듯 상호작용할 수 있는 타이머 기반 스캔 시뮬레이션 로직을 구축했습니다.",
