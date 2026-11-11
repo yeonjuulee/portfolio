@@ -1,3 +1,4 @@
+import { asset } from "../utils/asset";
 // 프로필/연락처/이력 데이터. 텍스트가 바뀌면 이 파일만 수정하세요.
 // "#" 로 둔 링크는 실제 주소가 생기면 교체합니다(# 이면 "준비 중" 토스트가 뜹니다).
 export const profile = {
@@ -16,8 +17,8 @@ export const profile = {
   email: "yeonjuu.114@gmail.com",
   links: {
     github: "https://github.com/yeonjuulee/",
-    resume: "/pdf/resume.pdf",
-    cover: "/pdf/coverletter.pdf",
+    resume: asset("/pdf/resume.pdf"),
+    cover: asset("/pdf/coverletter.pdf"),
   },
   // 이력서 기준. 전화번호·생년월일·주소는 공개 사이트라 넣지 않았습니다.
   timeline: [

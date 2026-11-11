@@ -95,7 +95,7 @@ export default function ProjectDetail() {
         <ImagePlaceholder
           className="detail__media"
           ratio="16 / 9"
-          src={project.thumb}
+          src={project.cover || project.thumb}
           alt={`${project.name} 대표 이미지`}
           label="대표 이미지 16:9"
         />
@@ -133,7 +133,7 @@ export default function ProjectDetail() {
           <div className="detail__screens">
             {project.screens && project.screens.length > 0
               ? project.screens.map((src, i) => (
-                  <ImagePlaceholder key={src} ratio="16 / 10" src={src} alt={`${project.name} 화면 ${i + 1}`} label={`SCREEN ${i + 1}`} />
+                  <ImagePlaceholder key={src} ratio={project.screenRatio || "16 / 10"} src={src} alt={`${project.name} 화면 ${i + 1}`} label={`SCREEN ${i + 1}`} />
                 ))
               : [1, 2, 3, 4].map((n) => <ImagePlaceholder key={n} ratio="16 / 10" label={`SCREEN ${n}`} />)}
           </div>

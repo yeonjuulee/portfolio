@@ -89,3 +89,191 @@
   background: #17194a;
   box-shadow: inset 5px 0 0 var(--ai-on-dark);
 }
+
+.cg__notes {
+  display: grid;
+  gap: 10px;
+  margin: 14px 0 0;
+}
+
+.cg__notes > div {
+  display: grid;
+  grid-template-columns: 110px minmax(0, 1fr);
+  gap: 16px;
+}
+
+.cg__notes dt {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.cg__notes dd {
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.7;
+  color: var(--ink-2);
+}
+
+@media (max-width: 640px) {
+  .cg__notes > div {
+    grid-template-columns: 1fr;
+    gap: 2px;
+  }
+}
+
+/* ── 코드 패널 + 오른쪽 결과 영상 (호버 시 코드가 좁아지고 영상이 넓어짐) ── */
+/* grid-template-columns 는 fr↔% 전환이 보간되지 않아 모션이 없었으므로, flex-basis(%) 로 전환합니다. */
+.cg__row {
+  display: flex;
+  gap: 16px;
+}
+
+.cg__panel {
+  flex: 0 0 calc(90% - 8px);
+  min-width: 0;
+  transition: flex-basis 0.7s cubic-bezier(0.22, 0.8, 0.2, 1);
+  position: relative;
+  display: flex;
+  justify-content: flex-end;
+  overflow: hidden;
+  border: 1px solid var(--line, #e0e0e0);
+  border-radius: var(--radius-md);
+  background: #fff;
+}
+
+.cg__panel::before {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 0;
+  z-index: 1;
+  width: 48px;
+  background: linear-gradient(90deg, #fff, rgba(255, 255, 255, 0));
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+}
+
+.cg__row:has(.cg__vid:hover) .cg__panel::before,
+.cg__row:has(.cg__vid:focus-visible) .cg__panel::before {
+  opacity: 1;
+}
+
+.cg__inner {
+  flex: 1 0 720px;
+  min-width: 720px;
+  box-sizing: border-box;
+  padding: 24px 28px;
+}
+
+.cg__row:has(.cg__vid:hover) .cg__panel,
+.cg__row:has(.cg__vid:focus-visible) .cg__panel {
+  flex-basis: calc(30% - 8px);
+}
+
+.cg__vid {
+  flex: 1 1 0;
+  min-width: 0;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 320px;
+  overflow: hidden;
+  border: 1px solid var(--line, #d9d9d9);
+  border-radius: var(--radius-md);
+  background: #e5e7eb;
+  color: #444;
+  cursor: pointer;
+}
+
+.cg__tab {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  transition: opacity 0.25s ease;
+}
+
+.cg__tab span {
+  writing-mode: vertical-rl;
+  font-size: 14px;
+  letter-spacing: 0.12em;
+}
+
+/* 영상은 회색 칸 전체를 꽉 채웁니다(object-fit: cover). 칸 비율이 영상(약 1.84:1)과 비슷하게 유지되도록 코드 패널 높이에 맞춰 늘어납니다. */
+.cg__frame {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #d4d7dd;
+  overflow: hidden;
+  opacity: 0;
+  transform: translateX(24px);
+  transition: opacity 0.5s ease 0.2s, transform 0.7s cubic-bezier(0.22, 0.8, 0.2, 1) 0.1s;
+}
+
+.cg__frame video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+}
+
+.cg__frame p {
+  margin: 0;
+  font-size: 15px;
+  color: #555;
+}
+
+.cg__row:has(.cg__vid:hover) .cg__tab,
+.cg__row:has(.cg__vid:focus-visible) .cg__tab {
+  opacity: 0;
+}
+
+.cg__row:has(.cg__vid:hover) .cg__frame,
+.cg__row:has(.cg__vid:focus-visible) .cg__frame {
+  opacity: 1;
+  transform: none;
+}
+
+/* 좁은 화면(호버 없음): 코드 아래에 영상을 항상 펼쳐 두고, 누르면 재생/정지 */
+@media (max-width: 900px) {
+  .cg__row {
+    flex-direction: column;
+  }
+  .cg__panel,
+  .cg__row:has(.cg__vid:hover) .cg__panel {
+    flex: 0 0 auto;
+  }
+  .cg__inner {
+    flex: 1 1 0;
+    min-width: 0;
+    padding: 18px;
+  }
+  .cg__tab {
+    display: none;
+  }
+  .cg__vid {
+    min-height: 0;
+    aspect-ratio: 1600 / 868;
+  }
+  .cg__frame {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cg__panel,
+  .cg__frame,
+  .cg__tab {
+    transition: none;
+  }
+}

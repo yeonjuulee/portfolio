@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { asset } from "../utils/asset";
 
 // "동작 줄이기" 설정이면 영상을 자동 재생하지 않고 컨트롤을 보여줍니다.
 function useReducedMotion() {
@@ -20,9 +21,9 @@ export default function ImagePlaceholder({ label, ratio = "4 / 3", src, video, c
   return (
     <div className={`gray-box ${className}`} style={{ aspectRatio: ratio }}>
       {video ? (
-        <video src={video} poster={src} autoPlay={!reduce} loop={!reduce} muted playsInline controls={reduce} aria-label={alt || label} />
+        <video src={asset(video)} poster={asset(src)} autoPlay={!reduce} loop={!reduce} muted playsInline controls={reduce} aria-label={alt || label} />
       ) : src ? (
-        <img src={src} alt={alt} loading="lazy" />
+        <img src={asset(src)} alt={alt} loading="lazy" />
       ) : (
         <span>{label}</span>
       )}
