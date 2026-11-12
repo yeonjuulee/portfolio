@@ -72,22 +72,19 @@
 }
 
 .cg__code {
+  flex: 1 0 720px;
+  min-width: 720px;
+  box-sizing: border-box;
   margin: 0;
   padding: 20px 22px;
   overflow-x: auto;
-  border-radius: var(--radius-md);
-  background: var(--ink);
+  background: transparent;
   color: #e8e9f5;
   font-family: var(--font-mono);
   font-size: 14.5px;
   line-height: 1.8;
   tab-size: 2;
   transition: background 0.2s ease, box-shadow 0.2s ease;
-}
-
-.cg.is-ai .cg__code {
-  background: #17194a;
-  box-shadow: inset 5px 0 0 var(--ai-on-dark);
 }
 
 .cg__notes {
@@ -137,9 +134,13 @@
   display: flex;
   justify-content: flex-end;
   overflow: hidden;
-  border: 1px solid var(--line, #e0e0e0);
   border-radius: var(--radius-md);
-  background: #fff;
+  background: var(--ink);
+}
+
+.cg.is-ai .cg__panel {
+  background: #17194a;
+  box-shadow: inset 5px 0 0 var(--ai-on-dark);
 }
 
 .cg__panel::before {
@@ -148,7 +149,7 @@
   inset: 0 auto 0 0;
   z-index: 1;
   width: 48px;
-  background: linear-gradient(90deg, #fff, rgba(255, 255, 255, 0));
+  background: linear-gradient(90deg, var(--ink), rgba(0, 0, 0, 0));
   opacity: 0;
   transition: opacity 0.4s ease;
   pointer-events: none;
@@ -159,16 +160,31 @@
   opacity: 1;
 }
 
-.cg__inner {
-  flex: 1 0 720px;
-  min-width: 720px;
-  box-sizing: border-box;
-  padding: 24px 28px;
+.cg.is-ai .cg__panel::before {
+  background: linear-gradient(90deg, #17194a, rgba(23, 25, 74, 0));
 }
 
 .cg__row:has(.cg__vid:hover) .cg__panel,
 .cg__row:has(.cg__vid:focus-visible) .cg__panel {
   flex-basis: calc(30% - 8px);
+}
+
+/* 영상이 열리면 영상 상자는 가로 폭에 맞춘 비율로 고정하고, 바깥 칸(호버 영역)은 코드 높이 그대로 둡니다.
+   위/가운데/아래 정렬은 --vid-align (flex-start | center | flex-end) 로 바꿉니다. */
+.cg__row:has(.cg__vid:hover) .cg__vid,
+.cg__row:has(.cg__vid:focus-visible) .cg__vid {
+  align-items: var(--vid-align, center);
+  background: transparent;
+  border-color: transparent;
+}
+
+.cg__row:has(.cg__vid:hover) .cg__frame,
+.cg__row:has(.cg__vid:focus-visible) .cg__frame {
+  position: relative;
+  inset: auto;
+  width: 100%;
+  aspect-ratio: 2558 / 1332;
+  border-radius: var(--radius-md);
 }
 
 .cg__vid {
@@ -252,7 +268,7 @@
   .cg__row:has(.cg__vid:hover) .cg__panel {
     flex: 0 0 auto;
   }
-  .cg__inner {
+  .cg__code {
     flex: 1 1 0;
     min-width: 0;
     padding: 18px;
@@ -261,8 +277,10 @@
     display: none;
   }
   .cg__vid {
+    flex: 0 0 auto;
+    width: 100%;
     min-height: 0;
-    aspect-ratio: 1600 / 868;
+    aspect-ratio: 2558 / 1332;
   }
   .cg__frame {
     opacity: 1;

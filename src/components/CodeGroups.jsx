@@ -61,36 +61,18 @@ function CodeGroup({ g, index, showAi }) {
 
   return (
     <article className={`cg${g.ai && showAi ? " is-ai" : ""}`}>
+      <header className="cg__head">
+        <h3>
+          <span>{index + 1}</span>
+          {g.title}
+        </h3>
+        <span className={`chip ${g.ai ? "chip--ai" : "chip--ink"}`}>{g.ai ? "AI 보완" : "직접 작성"}</span>
+      </header>
       <div className="cg__row">
         <div className="cg__panel">
-          <div className="cg__inner">
-            <header className="cg__head">
-              <h3>
-                <span>{index + 1}</span>
-                {g.title}
-              </h3>
-              <span className={`chip ${g.ai ? "chip--ai" : "chip--ink"}`}>{g.ai ? "AI 보완" : "직접 작성"}</span>
-            </header>
-            <pre className="cg__code" tabIndex={0} role="region" aria-label={`${g.title} 코드`}>
-              <code>{g.lines.join("\n")}</code>
-            </pre>
-            {(g.why || g.limit) && (
-              <dl className="cg__notes">
-                {g.why && (
-                  <div>
-                    <dt>핵심 판단</dt>
-                    <dd>{g.why}</dd>
-                  </div>
-                )}
-                {g.limit && (
-                  <div>
-                    <dt>한계와 개선</dt>
-                    <dd>{g.limit}</dd>
-                  </div>
-                )}
-              </dl>
-            )}
-          </div>
+          <pre className="cg__code" tabIndex={0} role="region" aria-label={`${g.title} 코드`}>
+            <code>{g.lines.join("\n")}</code>
+          </pre>
         </div>
 
         <div
@@ -120,6 +102,22 @@ function CodeGroup({ g, index, showAi }) {
           </div>
         </div>
       </div>
+      {(g.why || g.limit) && (
+        <dl className="cg__notes">
+          {g.why && (
+            <div>
+              <dt>핵심 판단</dt>
+              <dd>{g.why}</dd>
+            </div>
+          )}
+          {g.limit && (
+            <div>
+              <dt>한계와 개선</dt>
+              <dd>{g.limit}</dd>
+            </div>
+          )}
+        </dl>
+      )}
     </article>
   );
 }
