@@ -26,7 +26,7 @@ export default function Hero() {
   return (
     <section className="hero" aria-labelledby="hero-title">
       <div className="hero__media">
-        <ImagePlaceholder ratio="16 / 9" label="대표 작업물 영상 · 이미지" src={cur.thumb} video={cur.video} />
+        <ImagePlaceholder ratio="16 / 9" label="대표 작업물 영상 · 이미지" src={cur.poster || cur.cover || cur.thumb} video={cur.video} />
       </div>
 
       <div className="container hero__inner">

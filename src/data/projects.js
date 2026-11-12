@@ -9,6 +9,8 @@
 //  thumb  : 목록 카드(4:3) 이미지 경로 (public 기준). 상세 페이지 대표 이미지(16:9)도 겸합니다.
 //  cover  : (선택) 상세 페이지 대표 이미지(16:9)를 따로 쓰고 싶을 때의 경로. 없으면 thumb 사용
 //  screens: 화면 시안 이미지 경로 배열 (비어 있으면 회색 박스)
+//  code[].peek: 평소(영상이 닫혀 있을 때) 영상 일부가 보이는 위치, 예 "76% 50%" (생략 시 가운데 위)
+//  poster: 첫 화면 대표 영상이 로딩되기 전에 보일 이미지 (생략 시 cover/thumb)
 //  screenRatio: 화면 시안 칸 비율, 예 "16 / 9" (생략 시 "16 / 10")
 //  video  : public 폴더 기준 경로 ("/videos/xxx.mp4"). 비어 있으면 회색 박스가 보입니다.
 export const projects = [
@@ -39,7 +41,7 @@ export const projects = [
   {
     slug: "oreum",
     categories: ["기획", "개발"],
-    featured: false,
+    featured: true,
     name: "Oreum",
     kind: "dev",
     tagline: "은둔 청년을 위한 서비스 웹사이트",
@@ -52,7 +54,8 @@ export const projects = [
     links: { github: "https://github.com/yeonjuulee/oreum", demo: "https://yeonjuulee.github.io/oreum/" },
     thumb: "/images/projects/oreum/thumb.jpg", // 목록 카드(4:3) 이미지
     cover: "/images/projects/oreum/cover.jpg", // 상세 페이지 대표 이미지(16:9)
-    video: "",
+    poster: "/images/projects/oreum/hero-poster.jpg", // 영상이 뜨기 전에 보이는 첫 장면
+    video: "/video/code/oreum-intro.mp4", // 첫 화면 대표 영상(임시: 첫 번째 핵심 코드 시연 영상)
     screens: [
       "/images/projects/oreum/screen-1-intro.jpg",
       "/images/projects/oreum/screen-2-service.jpg",
@@ -70,7 +73,7 @@ export const projects = [
       {
         title: "인구 점 변환: 점 1개에서 1,000개 · 2.4만 · 67만 명으로",
         ai: true,
-        video: "/video/code/oreum-intro.mp4", // 스토리 첫 장면(index.html)에서 점 1개가 학교 · 야구장 · 제주도 모양으로 바뀌는 모습 (약 14초)
+        video: "/video/code/oreum-intro.mp4", peek: "76% 50%", // 스토리 첫 장면(index.html)에서 점 1개가 학교 · 야구장 · 제주도 모양으로 바뀌는 모습 (약 14초)
         lines: [
           "// story.js: 단계별 점 개수(n)와 모양. 점 하나가 나타내는 사람 수도 단계마다 커집니다",
           "var STAGES = [",
@@ -349,7 +352,7 @@ export const projects = [
   {
     slug: "lookback",
     categories: ["기획", "디자인", "개발"],
-    featured: true,
+    featured: false,
     name: "LOOK BACK",
     kind: "dev",
     tagline: "타인을 향한 무례함을 다루는 인터랙티브 시리어스 게임",

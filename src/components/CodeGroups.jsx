@@ -49,7 +49,11 @@ function CodeGroup({ g, index, showAi }) {
   };
   const stop = () => {
     clearTimeout(timer.current);
-    if (ref.current) ref.current.pause();
+    const v = ref.current;
+    if (!v) return;
+    v.pause();
+    // 칸이 닫힌 뒤에는 첫 장면으로 되돌려, 평소에 보이는 일부가 늘 같은 장면이 되게 합니다.
+    timer.current = setTimeout(() => { if (v.paused) v.currentTime = 0.1; }, 700);
   };
   // 마우스가 없는 기기(터치)에서는 눌러서 재생/정지합니다.
   const tapToggle = () => {
@@ -86,16 +90,9 @@ function CodeGroup({ g, index, showAi }) {
           onBlur={stop}
           onClick={tapToggle}
         >
-          <div className="cg__tab" aria-hidden="true">
-            <svg width="26" height="26" viewBox="0 0 44 44">
-              <circle cx="22" cy="22" r="21" fill="none" stroke="currentColor" strokeWidth="2" />
-              <path d="M18 14l12 8-12 8z" fill="currentColor" />
-            </svg>
-            <span>결과 영상</span>
-          </div>
           <div className="cg__frame">
             {g.video ? (
-              <video ref={ref} src={asset(g.video)} muted loop playsInline preload="metadata" />
+              <video ref={ref} src={asset(g.video) + "#t=0.1"} style={g.peek ? { objectPosition: g.peek } : undefined} muted loop playsInline preload="metadata" />
             ) : (
               <p>결과 영상 준비 중</p>
             )}
