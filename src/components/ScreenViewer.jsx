@@ -16,6 +16,8 @@ function VideoView({ video, name }) {
   const ref = useRef(null);
   const [now, setNow] = useState(0);
   const chapters = video.chapters || [];
+  // 평소에는 재생바 없이 소리 없이 자동 반복 재생합니다. "동작 줄이기" 설정이면 자동 재생 대신 재생바를 보여 줍니다.
+  const [reduce] = useState(() => typeof window !== "undefined" && !!window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches);
 
   // 지금 재생 위치가 속한 장면 번호
   let active = 0;
@@ -37,7 +39,9 @@ function VideoView({ video, name }) {
           ref={ref}
           src={asset(video.src)}
           poster={video.poster ? asset(video.poster) : undefined}
-          controls
+          autoPlay={!reduce}
+          loop
+          controls={reduce}
           muted
           playsInline
           preload="metadata"
