@@ -10,11 +10,12 @@ const wnoise = (j) => {
   return s - Math.floor(s);
 };
 // 이력이 있는 자리(각 항목의 날짜 위)만 솟아오르고, 최근 항목일수록 조금 더 높습니다.
-const waveBase = (i, n) => {
+const waveBase = (i, centers) => {
+  const n = centers.length;
   const x = i / (WN - 1);
   let a = 0.05 + 0.04 * wnoise(i);
   for (let k = 0; k < n; k += 1) {
-    const c = (k + 0.22) / n;
+    const c = centers[k];
     const h = 0.7 + 0.3 * (k / Math.max(1, n - 1));
     a += h * 0.85 * Math.exp(-(((x - c) / 0.032) ** 2)) * (0.65 + 0.35 * wnoise(i + 9));
   }
@@ -29,7 +30,16 @@ export default function About() {
     const el = waveRef.current;
     if (!el) return undefined;
     const bars = Array.from(el.children);
-    const base = bars.map((_, i) => waveBase(i, n));
+    let base = [];
+    // 솟아오르는 구간이 각 항목 글자(날짜)가 시작하는 자리에서 시작하도록 위치를 잰다.
+    const place = () => {
+      const w = el.offsetWidth || 1;
+      const lis = Array.from(el.parentElement.querySelectorAll("li"));
+      const centers = lis.map((li) => (li.offsetLeft - el.offsetLeft + 0.024 * w) / w);
+      base = bars.map((_, i) => waveBase(i, centers));
+    };
+    place();
+    window.addEventListener("resize", place);
     const paint = (t, still) =>
       bars.forEach((b, i) => {
         const hi = base[i] > 0.3;
@@ -39,7 +49,7 @@ export default function About() {
       });
     if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
       paint(0, true);
-      return undefined;
+      return () => window.removeEventListener("resize", place);
     }
     let visible = true;
     let raf = 0;
@@ -55,6 +65,7 @@ export default function About() {
     return () => {
       cancelAnimationFrame(raf);
       io.disconnect();
+      window.removeEventListener("resize", place);
     };
   }, [n]);
 
