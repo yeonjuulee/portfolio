@@ -3,7 +3,7 @@ import { asset } from "../utils/asset";
 // "#" 로 둔 링크는 실제 주소가 생기면 교체합니다(# 이면 "준비 중" 토스트가 뜹니다).
 export const profile = {
   name: "이연주",
-  nameEn: "YEONJU",
+  nameEn: "Lee YeonJu",
   role: "웹 콘텐츠 제작자",
   school: "계원예술대학교",
   major: "디지털미디어디자인학과",
