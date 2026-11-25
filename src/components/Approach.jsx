@@ -208,6 +208,64 @@ export default function Approach() {
     };
   }, []);
 
+  // 쌓이는 구간에서는 휠을 한 번 굴리면 다음(이전) 카드가 자리를 잡는 위치까지 부드럽게 붙습니다.
+  // 카드가 쌓이지 않는 화면(작은 화면)이나 동작 줄이기 설정에서는 쓰지 않습니다.
+  useEffect(() => {
+    const root = rootRef.current;
+    if (!root || (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches)) return undefined;
+    const list = root.querySelector(".approach__list");
+    const steps = Array.from(root.querySelectorAll(".step"));
+    let busy = false;
+    let lastWheel = 0;
+    let to = 0;
+
+    // 각 카드가 쌓이는 자리를 잡는 스크롤 위치
+    const stops = () => {
+      const gap = parseFloat(window.getComputedStyle(list).rowGap) || 0;
+      const base = list.getBoundingClientRect().top + window.scrollY;
+      let acc = 0;
+      return steps.map((el) => {
+        const p = base + acc - parseFloat(window.getComputedStyle(el).top);
+        acc += el.offsetHeight + gap;
+        return Math.round(p);
+      });
+    };
+    const onWheel = (e) => {
+      if (e.ctrlKey || Math.abs(e.deltaY) < 2) return;
+      if (window.getComputedStyle(steps[0]).position !== "sticky") return;
+      const now = performance.now();
+      const y = window.scrollY;
+      const p = stops();
+      const first = p[0];
+      const last = p[p.length - 1];
+      const down = e.deltaY > 0;
+      const inside = down ? y >= first - 40 && y < last - 4 : y > first + 4 && y <= last + 40;
+      if (!inside) {
+        lastWheel = now;
+        return;
+      }
+      e.preventDefault();
+      if (busy || now - lastWheel < 120) {
+        lastWheel = now;
+        return;
+      }
+      lastWheel = now;
+      const target = down ? p.find((v) => v > y + 4) : [...p].reverse().find((v) => v < y - 4);
+      if (target === undefined) return;
+      busy = true;
+      window.scrollTo({ top: target, behavior: "smooth" });
+      window.clearTimeout(to);
+      to = window.setTimeout(() => {
+        busy = false;
+      }, 650);
+    };
+    window.addEventListener("wheel", onWheel, { passive: false });
+    return () => {
+      window.removeEventListener("wheel", onWheel);
+      window.clearTimeout(to);
+    };
+  }, []);
+
   const goTo = (k) => {
     const el = rootRef.current && rootRef.current.querySelectorAll(".step")[k];
     if (!el) return;
