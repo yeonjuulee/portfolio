@@ -1,14 +1,61 @@
 /* 왼쪽 제목은 고정(sticky), 오른쪽 카드는 스크롤하면 겹쳐 쌓입니다. (이후 인터랙션이 얹힐 구조) */
-.approach__layout {
+/* 제목과 음파 내비게이션은 위에 고정(sticky), 카드는 그 아래에서 스크롤하면 겹쳐 쌓입니다. */
+.approach__head {
+  position: sticky;
+  top: var(--header-h);
+  z-index: 5;
   display: grid;
-  grid-template-columns: minmax(0, 0.5fr) minmax(0, 1.5fr);
-  gap: clamp(28px, 4vw, 56px);
-  align-items: start;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: clamp(20px, 4vw, 56px);
+  align-items: end;
+  padding: 16px 0;
+  background: var(--paper);
 }
 
-.approach__side {
-  position: sticky;
-  top: calc(var(--header-h) + 32px);
+.approach__side .section-lead {
+  white-space: nowrap;
+}
+
+/* 음파 내비게이션 */
+.awave {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 72px;
+}
+
+.awave__bar {
+  display: block;
+  width: 2px;
+  height: calc(var(--s, 0.3) * 100%);
+  border-radius: 1px;
+  background: #c9c7f6;
+}
+
+.awave__bar.is-on {
+  background: var(--accent);
+}
+
+.awave__zones {
+  position: absolute;
+  inset: -6px 0;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.awave__zones button {
+  display: block;
+  padding: 0;
+  border: 0;
+  border-radius: 12px;
+  background: none;
+  cursor: pointer;
+}
+
+.awave__zones button:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: -2px;
 }
 
 .approach__list {
@@ -24,7 +71,7 @@
 
 .step {
   position: sticky;
-  top: calc(var(--header-h) + 24px + var(--i) * var(--peek, 112px)); /* 뒤에 쌓인 카드는 단계명·제목·한 줄 설명까지 보입니다 */
+  top: calc(var(--header-h) + var(--ap-hh, 150px) + 12px + var(--i) * var(--peek, 104px)); /* 뒤에 쌓인 카드는 단계명·제목·한 줄 설명까지 보입니다 */
   display: grid;
   grid-template-columns: clamp(84px, 9vw, 128px) minmax(0, 1fr);
   gap: 8px 28px;
@@ -180,11 +227,20 @@
 }
 
 @media (max-width: 900px) {
-  .approach__layout {
+  .approach__head {
+    position: static;
     grid-template-columns: 1fr;
+    align-items: start;
   }
 
-  .approach__side,
+  .approach__side .section-lead {
+    white-space: normal;
+  }
+
+  .awave {
+    height: 52px;
+  }
+
   .step {
     position: static;
   }
@@ -200,7 +256,7 @@
 
 /* 화면 높이가 낮으면 마지막 카드가 잘리므로 쌓임 효과를 끕니다. */
 @media (max-height: 880px) {
-  .approach__side,
+  .approach__head,
   .step {
     position: static;
   }

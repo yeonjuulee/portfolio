@@ -3,10 +3,32 @@ import { createPortal } from "react-dom";
 import { TransitionLink as Link } from "./RouteWave";
 import { profile } from "../data/profile";
 import { projects } from "../data/projects";
-import { skills, scoreOf } from "../data/skills";
 import { useToast } from "../context/ToastContext";
-import ImagePlaceholder from "./ImagePlaceholder";
+import { asset } from "../utils/asset";
 import "./QuickSummary.css";
+
+
+const WN = 45; // 한 줄 소개 칸 음파 선 개수
+const HN = 40; // 헤더 음파 선 개수
+const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+const noise = (j) => {
+  const s = Math.sin(j * 12.9898 + 4.1414) * 43758.5453;
+  return s - Math.floor(s);
+};
+const waveBase = (i, n) => {
+  const x = i / (n - 1);
+  const env = Math.pow(Math.max(0, 1 - Math.abs(x - 0.5) * 2), 0.8);
+  return Math.min(0.95, env * (0.45 + 0.55 * noise(Math.min(i, n - 1 - i))) + 0.1);
+};
+
+// 일하는 방식 네 단계(요약). 자세한 내용은 Approach 섹션과 같은 흐름입니다.
+const STEPS = [
+  ["기획", "사용자와 목적을 먼저 정의한다"],
+  ["설계", "구조와 화면 흐름을 시각 체계로 옮긴다"],
+  ["구현", "AI와 역할을 나눠 개발 효율을 높인다"],
+  ["개선", "사용자 입장에서 직접 써보고 고친다"],
+];
+const STACK = ["HTML / CSS", "JavaScript", "React", "p5.js", "Figma"];
 
 // "빠르게 보기" 모달. 닫기 버튼으로만 닫힙니다(배경 클릭/ESC로는 닫히지 않음).
 export default function QuickSummary({ onClose }) {
@@ -20,6 +42,46 @@ export default function QuickSummary({ onClose }) {
   };
 
   const panelRef = useRef(null);
+  const waveRef = useRef(null);
+
+  // 한 줄 소개 칸의 음파: 숨 쉬듯 움직이고, 마우스가 가까우면 해당 선이 솟아오릅니다.
+  useEffect(() => {
+    const el = waveRef.current;
+    if (!el) return undefined;
+    const tile = el.parentElement;
+    const bars = Array.from(el.children);
+    const cur = bars.map((_, i) => waveBase(i, WN));
+    cur.forEach((v, i) => bars[i].style.setProperty("--s", v.toFixed(3)));
+    if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) return undefined;
+    let mx = -1;
+    let raf = 0;
+    const move = (e) => {
+      const r = tile.getBoundingClientRect();
+      mx = (e.clientX - r.left) / r.width;
+    };
+    const leave = () => {
+      mx = -1;
+    };
+    tile.addEventListener("pointermove", move);
+    tile.addEventListener("pointerleave", leave);
+    const frame = (now) => {
+      const t = now / 1000;
+      for (let i = 0; i < WN; i += 1) {
+        const x = i / (WN - 1);
+        const b = waveBase(i, WN);
+        const v = clamp(b + b * Math.sin(t * 1.5 + i * 0.55) * 0.14 + (mx >= 0 ? Math.exp(-(((x - mx) / 0.09) ** 2)) * 0.5 : 0), 0.06, 1);
+        cur[i] += (v - cur[i]) * 0.14;
+        bars[i].style.setProperty("--s", cur[i].toFixed(3));
+      }
+      raf = requestAnimationFrame(frame);
+    };
+    raf = requestAnimationFrame(frame);
+    return () => {
+      cancelAnimationFrame(raf);
+      tile.removeEventListener("pointermove", move);
+      tile.removeEventListener("pointerleave", leave);
+    };
+  }, []);
 
   useEffect(() => {
     const trigger = document.activeElement; // 닫을 때 포커스를 돌려줄 버튼
@@ -54,8 +116,6 @@ export default function QuickSummary({ onClose }) {
     };
   }, []);
 
-  const dev = skills.filter((s) => s.category === "개발");
-  const cat = (c) => projects.filter((p) => p.categories.includes(c)).length;
   const featured = projects.filter((p) => p.featured);
 
   return createPortal(
@@ -70,55 +130,61 @@ export default function QuickSummary({ onClose }) {
               {profile.school} {profile.major} · {profile.minor}
             </p>
           </div>
+          <div className="qs__wave" aria-hidden="true">
+            {Array.from({ length: HN }, (_, i) => (
+              <i key={i} style={{ "--h": `${Math.round(4 + 28 * Math.min(1, waveBase(i, HN) + 0.02))}px` }} />
+            ))}
+          </div>
           <button ref={closeRef} type="button" className="btn btn-ghost qs__close" onClick={onClose}>
             닫기
           </button>
         </div>
 
         <div className="qs__grid">
-          <section className="qs__tile qs__t1" aria-label="프로젝트 수">
-            <h3>프로젝트</h3>
-            <p className="qs__num">
-              {projects.length}
-              <small>개</small>
-            </p>
-            <p>
-              기획 {cat("기획")} · 디자인 {cat("디자인")} · 개발 {cat("개발")}
-            </p>
+          <section className="qs__tile qs__t1" aria-label="한 줄 소개">
+            <div className="qs__wf" ref={waveRef} aria-hidden="true">
+              {Array.from({ length: WN }, (_, i) => (
+                <i key={i} />
+              ))}
+            </div>
+            <h3>한 줄 소개</h3>
+            <p className="qs__pitch">{profile.heroSub.join(" ")}</p>
           </section>
 
           <section className="qs__tile qs__t2">
-            <h3>기술 · 활용도</h3>
-            <ul className="qs__bars">
-              {dev.map((s) => {
-                const { percent } = scoreOf(s);
-                return (
-                  <li key={s.name}>
-                    <b>
-                      {s.name}
-                      <span>{percent}%</span>
-                    </b>
-                    <i aria-hidden="true">
-                      <u style={{ width: `${percent}%` }} />
-                    </i>
-                  </li>
-                );
-              })}
+            <h3>일하는 방식</h3>
+            <ol className="qs__steps">
+              {STEPS.map(([mark, text]) => (
+                <li key={mark}>
+                  <b>{mark}</b>
+                  <span>{text}</span>
+                </li>
+              ))}
+            </ol>
+            <ul className="qs__stack" aria-label="사용 기술">
+              {STACK.map((t) => (
+                <li key={t}>{t}</li>
+              ))}
             </ul>
           </section>
 
           <section className="qs__tile qs__t3">
             <h3>대표 작업물</h3>
             <ul className="qs__thumbs">
-              {featured.map((p) => (
-                <li key={p.slug}>
-                  <Link to={`/project/${p.slug}`} onClick={onClose}>
-                    <ImagePlaceholder ratio="2 / 1" label={p.name.toUpperCase()} src={p.thumb} />
-                    <strong>{p.name}</strong>
-                    <span>{p.tagline}</span>
-                  </Link>
-                </li>
-              ))}
+              {featured.map((p) => {
+                const img = p.cover || p.poster || p.thumb;
+                return (
+                  <li key={p.slug}>
+                    <Link to={`/project/${p.slug}`} onClick={onClose} className="qs__pj">
+                      {img ? <img src={asset(img)} alt="" loading="lazy" /> : <em>{p.name}</em>}
+                      <span className="qs__pjtx">
+                        <strong translate="no">{p.name}</strong>
+                        <span>{p.tagline}</span>
+                      </span>
+                    </Link>
+                  </li>
+                );
+              })}
             </ul>
           </section>
 

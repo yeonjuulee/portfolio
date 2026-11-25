@@ -1,3 +1,4 @@
+import { useEffect, useRef } from "react";
 import { TransitionLink as Link } from "./RouteWave";
 import "./Approach.css";
 
@@ -109,11 +110,115 @@ const STEPS = [
 
 const TOOLS = ["HTML / CSS", "JavaScript", "React", "p5.js", "Figma", "Git / GitHub", "AI 도구 (메인 · 보조)"];
 
+const N = 84; // 음파 선 개수
+const noise = (j) => {
+  const s = Math.sin(j * 12.9898 + 4.14) * 43758.5453;
+  return s - Math.floor(s);
+};
+const baseH = (i) => {
+  const x = i / (N - 1);
+  return Math.min(0.95, Math.pow(Math.max(0, 1 - Math.abs(x - 0.5) * 2), 0.55) * (0.12 + 0.88 * noise(i + 3)) + 0.04);
+};
+const zoneOf = (i) => Math.min(STEPS.length - 1, Math.floor(i / (N / STEPS.length)));
+
 export default function Approach() {
+  const rootRef = useRef(null);
+  const headRef = useRef(null);
+  const navRef = useRef(null);
+
+  // 제목 영역 높이를 CSS 변수로 알려 카드가 그 아래에 쌓이게 합니다.
+  useEffect(() => {
+    const head = headRef.current;
+    const root = rootRef.current;
+    if (!head || !root) return undefined;
+    const set = () => root.style.setProperty("--ap-hh", `${head.offsetHeight}px`);
+    set();
+    window.addEventListener("resize", set);
+    return () => window.removeEventListener("resize", set);
+  }, []);
+
+  // 음파 내비게이션: 카드가 자리를 잡고 쌓이면 그 단계 구간의 끝까지 왼쪽부터 칠해집니다(누적).
+  useEffect(() => {
+    const nav = navRef.current;
+    const root = rootRef.current;
+    if (!nav || !root) return undefined;
+    const bars = Array.from(nav.querySelectorAll(".awave__bar"));
+    const steps = Array.from(root.querySelectorAll(".step"));
+    const reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const cur = bars.map((_, i) => baseH(i));
+    let prog = 0;
+    let shown = 0;
+    let mx = -1;
+    let visible = true;
+    let raf = 0;
+
+    const measure = () => {
+      const vh = window.innerHeight;
+      let k = 0;
+      steps.forEach((el) => {
+        const r = el.getBoundingClientRect();
+        const st = window.getComputedStyle(el);
+        const target = st.position === "sticky" ? parseFloat(st.top) + 60 : vh * 0.45;
+        if (r.top <= target) k += 1;
+      });
+      prog = k / steps.length;
+    };
+    const move = (e) => {
+      const r = nav.getBoundingClientRect();
+      mx = (e.clientX - r.left) / r.width;
+    };
+    const leave = () => {
+      mx = -1;
+    };
+    const frame = (now) => {
+      if (visible) {
+        const t = now / 1000;
+        shown = reduce ? prog : shown + (prog - shown) * 0.07;
+        const f = shown * N;
+        for (let i = 0; i < N; i += 1) {
+          const on = i < f;
+          const b = baseH(i);
+          let v = on ? b * (reduce ? 1 : 0.86 + Math.sin(t * 1.9 + i * 0.55) * 0.2 + Math.sin(t * 0.8 - i * 0.31) * 0.08) : b * 0.5;
+          if (mx >= 0 && !reduce) v += Math.exp(-(((i / (N - 1) - mx) / 0.07) ** 2)) * 0.3;
+          v = Math.max(0.03, Math.min(1, v));
+          cur[i] += (v - cur[i]) * 0.14;
+          bars[i].style.setProperty("--s", cur[i].toFixed(3));
+          bars[i].classList.toggle("is-on", on);
+        }
+      }
+      raf = requestAnimationFrame(frame);
+    };
+    const io = new IntersectionObserver(([en]) => {
+      visible = en.isIntersecting;
+    });
+    io.observe(root);
+    measure();
+    window.addEventListener("scroll", measure, { passive: true });
+    window.addEventListener("resize", measure);
+    nav.addEventListener("pointermove", move);
+    nav.addEventListener("pointerleave", leave);
+    raf = requestAnimationFrame(frame);
+    return () => {
+      cancelAnimationFrame(raf);
+      io.disconnect();
+      window.removeEventListener("scroll", measure);
+      window.removeEventListener("resize", measure);
+      nav.removeEventListener("pointermove", move);
+      nav.removeEventListener("pointerleave", leave);
+    };
+  }, []);
+
+  const goTo = (k) => {
+    const el = rootRef.current && rootRef.current.querySelectorAll(".step")[k];
+    if (!el) return;
+    const reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    el.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "center" });
+  };
+
   return (
-    <section id="approach" className="section" aria-labelledby="approach-title">
+    <section id="approach" className="section" aria-labelledby="approach-title" ref={rootRef}>
       <div className="container">
-        <div className="approach__layout">
+        <div className="approach__head" ref={headRef}>
           <div className="approach__side">
             <h2 id="approach-title" className="sec-title">
               Approach <span>02</span>
@@ -125,6 +230,21 @@ export default function Approach() {
             </p>
           </div>
 
+          <div className="awave" ref={navRef} role="group" aria-label="일하는 방식 진행">
+            {Array.from({ length: N }, (_, i) => (
+              <i key={i} className="awave__bar" aria-hidden="true" />
+            ))}
+            <div className="awave__zones">
+              {STEPS.map((s, k) => (
+                <button key={s.mark} type="button" title={s.mark} onClick={() => goTo(k)}>
+                  <span className="sr-only">{s.mark} 카드로 이동</span>
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        <div className="approach__body">
           <ol className="approach__list">
             {STEPS.map((s, i) => (
               <li className="step card" key={s.mark} style={{ "--i": i }}>
