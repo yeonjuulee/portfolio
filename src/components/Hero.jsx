@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { Link } from "react-router-dom";
+import { TransitionLink as Link } from "./RouteWave";
 import { profile } from "../data/profile";
 import { projects } from "../data/projects";
 import { useToast } from "../context/ToastContext";

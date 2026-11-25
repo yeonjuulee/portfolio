@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { Link, Navigate, useParams } from "react-router-dom";
+import { Navigate, useParams } from "react-router-dom";
+import { TransitionLink as Link } from "../components/RouteWave";
 import { getProject, getNeighbors } from "../data/projects";
 import { useToast } from "../context/ToastContext";
 import ImagePlaceholder from "../components/ImagePlaceholder";

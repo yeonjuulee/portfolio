@@ -1,4 +1,5 @@
-import { Link, useSearchParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
+import { TransitionLink as Link } from "./RouteWave";
 import { projects } from "../data/projects";
 import ImagePlaceholder from "./ImagePlaceholder";
 import "./WorkList.css";

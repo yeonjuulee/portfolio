@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import { TransitionLink as Link } from "./RouteWave";
 import { useActiveSection } from "../hooks/useActiveSection";
 import { scrollToSection } from "../hooks/scrollToSection";
 import "./Header.css";

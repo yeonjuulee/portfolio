@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
-import { Link } from "react-router-dom";
+import { TransitionLink as Link } from "./RouteWave";
 import { profile } from "../data/profile";
 import { projects } from "../data/projects";
 import { skills, scoreOf } from "../data/skills";

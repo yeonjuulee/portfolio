@@ -1,0 +1,15 @@
+/* 페이지 이동 때 잠깐 덮이는 배경색 막(페이드). 평소에는 숨겨져 있습니다. */
+.rt {
+  position: fixed;
+  inset: 0;
+  z-index: 300;
+  display: none;
+  background: var(--paper);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.rt.is-on {
+  display: block;
+  pointer-events: auto;
+}

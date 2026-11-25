@@ -54,16 +54,16 @@ export default function ContactWave({ settle }) {
         const b = baseAt(i);
         let wave = b;
         if (t != null) {
-          const sweep = Math.exp(-(((x - (((t * (0.28 + 0.5 * e)) % 1.5) - 0.25)) / 0.09) ** 2)) * 0.4;
-          const amp = 0.32 + 0.5 * e;
-          const spd = 1 + 1.3 * e;
+          const sweep = Math.exp(-(((x - (((t * (0.28 + 0.12 * e)) % 1.5) - 0.25)) / 0.09) ** 2)) * 0.4;
+          const amp = 0.32 + 0.18 * e;
+          const spd = 1 + 0.35 * e;
           // 복사한 순간 가운데에서 바깥으로 퍼지는 물결
-          const ring = e > 0 ? Math.exp(-(((Math.abs(x - 0.5) - age * 0.7) / 0.1) ** 2)) * 0.6 * e : 0;
+          const ring = e > 0 ? Math.exp(-(((Math.abs(x - 0.5) - age * 0.7) / 0.1) ** 2)) * 0.3 * e : 0;
           wave =
-            b * (1 + amp * Math.sin(t * 2.6 * spd + i * 0.5) + (0.18 + 0.3 * e) * Math.sin(t * 4.3 * spd - i * 0.9)) +
+            b * (1 + amp * Math.sin(t * 2.6 * spd + i * 0.5) + (0.18 + 0.08 * e) * Math.sin(t * 4.3 * spd - i * 0.9)) +
             sweep * (0.3 + b) +
             ring +
-            0.12 * e;
+            0.04 * e;
         }
         wave = clamp(wave, 0.04, 1);
         const v = wave + (0.03 - wave) * f;

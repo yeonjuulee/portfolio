@@ -3,6 +3,7 @@ import { Navigate, Route, Routes, useLocation } from "react-router-dom";
 import { ToastProvider } from "./context/ToastContext";
 import Header from "./components/Header";
 import Contact from "./components/Contact";
+import { RouteTransition } from "./components/RouteWave";
 import Home from "./pages/Home";
 import ProjectDetail from "./pages/ProjectDetail";
 import "./styles/global.css";
@@ -28,17 +29,19 @@ function ScrollToTop() {
 export default function App() {
   return (
     <ToastProvider>
-      <a className="skip-link" href="#main">
-        본문 바로가기
-      </a>
-      <ScrollToTop />
-      <Header />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/project/:slug" element={<ProjectDetail />} />
-        <Route path="*" element={<Navigate to="/" replace />} />
-      </Routes>
-      <Contact />
+      <RouteTransition>
+        <a className="skip-link" href="#main">
+          본문 바로가기
+        </a>
+        <ScrollToTop />
+        <Header />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/project/:slug" element={<ProjectDetail />} />
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Routes>
+        <Contact />
+      </RouteTransition>
     </ToastProvider>
   );
 }

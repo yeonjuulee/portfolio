@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { TransitionLink as Link } from "./RouteWave";
 import "./Approach.css";
 
 // Skill 섹션을 합친 "일하는 방식". 기획 · 설계 · 구현 · 개선 네 단계 카드에
