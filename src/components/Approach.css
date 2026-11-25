@@ -1,8 +1,8 @@
 /* 왼쪽 제목은 고정(sticky), 오른쪽 카드는 스크롤하면 겹쳐 쌓입니다. (이후 인터랙션이 얹힐 구조) */
 .approach__layout {
   display: grid;
-  grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
-  gap: clamp(28px, 5vw, 80px);
+  grid-template-columns: minmax(0, 0.5fr) minmax(0, 1.5fr);
+  gap: clamp(28px, 4vw, 56px);
   align-items: start;
 }
 
@@ -16,14 +16,19 @@
   gap: 18px;
 }
 
+/* 마지막 카드가 고정 위치에서 머물 수 있게 하는 여백. 이 여백이 끝나면 카드들이 함께 올라갑니다. */
+.approach__room {
+  height: 24vh;
+  list-style: none;
+}
+
 .step {
   position: sticky;
-  top: calc(var(--header-h) + 32px + var(--i) * 20px);
+  top: calc(var(--header-h) + 24px + var(--i) * var(--peek, 112px)); /* 뒤에 쌓인 카드는 단계명·제목·한 줄 설명까지 보입니다 */
   display: grid;
   grid-template-columns: clamp(84px, 9vw, 128px) minmax(0, 1fr);
   gap: 8px 28px;
-  min-height: 280px;
-  padding: clamp(24px, 3vw, 40px);
+  padding: clamp(24px, 2.6vw, 32px) clamp(24px, 3vw, 40px);
 }
 
 .step__no {
@@ -64,14 +69,81 @@
   color: var(--ink-2);
 }
 
+.step__caps {
+  display: grid;
+  margin-top: 20px;
+}
+
+.cap {
+  display: grid;
+  gap: 6px;
+  padding: 16px 0;
+  border-top: 1px dashed var(--line);
+}
+
+.cap h4,
+.cap p {
+  margin: 0;
+}
+
+.cap h4 {
+  font-size: 17px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+}
+
+.cap p {
+  font-size: 15.5px;
+  line-height: 1.7;
+  color: var(--ink-2);
+  word-break: keep-all;
+}
+
+.cap p b {
+  margin-right: 4px;
+  font-weight: 500;
+  color: var(--ink);
+}
+
 .step__ev {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   gap: 8px 10px;
-  margin-top: 20px;
-  padding-top: 16px;
-  border-top: 1px dashed var(--line);
+  margin-top: 6px;
+}
+
+.approach__tools {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px 12px;
+  margin-top: 32px;
+  padding: 22px 28px;
+  border: 1px solid var(--line);
+  border-radius: 22px;
+  background: var(--card);
+}
+
+.approach__tools > span {
+  margin-right: 6px;
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.approach__tools ul {
+  display: contents;
+}
+
+.approach__tools li {
+  display: inline-flex;
+  align-items: center;
+  min-height: 36px;
+  padding: 0 14px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--paper);
+  font-size: 14.5px;
 }
 
 .step__ev > span {
@@ -118,7 +190,22 @@
   }
 
   .step {
-    min-height: 0;
     grid-template-columns: 1fr;
+  }
+
+  .approach__room {
+    display: none;
+  }
+}
+
+/* 화면 높이가 낮으면 마지막 카드가 잘리므로 쌓임 효과를 끕니다. */
+@media (max-height: 880px) {
+  .approach__side,
+  .step {
+    position: static;
+  }
+
+  .approach__room {
+    display: none;
   }
 }

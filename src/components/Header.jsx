@@ -6,7 +6,6 @@ import "./Header.css";
 
 const NAV = [
   { id: "about", label: "소개" },
-  { id: "skills", label: "기술" },
   { id: "approach", label: "일하는 방식" },
   { id: "work", label: "작업물" },
 ];

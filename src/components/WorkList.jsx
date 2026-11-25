@@ -60,7 +60,7 @@ export default function WorkList() {
         <div className="section-head">
           <div>
             <h2 id="work-title" className="sec-title">
-              Work <span>04</span>
+              Work <span>03</span>
             </h2>
           </div>
 

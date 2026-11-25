@@ -3,7 +3,6 @@ import { useLocation } from "react-router-dom";
 import { scrollToSection } from "../hooks/scrollToSection";
 import Hero from "../components/Hero";
 import WorkList from "../components/WorkList";
-import Skills from "../components/Skills";
 import Approach from "../components/Approach";
 import About from "../components/About";
 
@@ -22,7 +21,6 @@ export default function Home() {
     <main id="main">
       <Hero />
       <About />
-      <Skills />
       <Approach />
       <WorkList />
     </main>

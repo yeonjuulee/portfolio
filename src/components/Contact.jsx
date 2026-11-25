@@ -1,17 +1,20 @@
 import { useState } from "react";
 import { profile } from "../data/profile";
 import { useToast } from "../context/ToastContext";
+import ContactWave from "./ContactWave";
 import "./Contact.css";
 
 export default function Contact() {
   const { notify } = useToast();
   const [copied, setCopied] = useState(false);
+  const [settle, setSettle] = useState(0); // 복사할 때마다 음파가 한 줄로 모입니다
 
   // mailto 링크는 환경에 따라 동작하지 않을 수 있어, 주소를 그대로 보여주고 복사 버튼을 함께 둡니다.
   const copy = async () => {
     try {
       await navigator.clipboard.writeText(profile.email);
       setCopied(true);
+      setSettle((n) => n + 1);
       setTimeout(() => setCopied(false), 1800);
     } catch (err) {
       notify("복사에 실패했어요. 주소를 직접 선택해 복사해 주세요.");
@@ -28,6 +31,7 @@ export default function Contact() {
   return (
     <footer id="contact" className="contact" aria-labelledby="contact-title">
       <div className="container">
+        <ContactWave settle={settle} />
         <div className="contact__layout">
         <h2 id="contact-title" className="contact__title">
           웹 콘텐츠 제작자를

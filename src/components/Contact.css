@@ -94,3 +94,38 @@
     grid-template-columns: minmax(0, 1fr);
   }
 }
+
+/* 위쪽 음파: 평소 출렁이다가 한 줄로 모입니다 */
+.cwave {
+  display: flex;
+  align-items: center;
+  height: clamp(110px, 12vw, 170px);
+  margin-bottom: clamp(28px, 4vw, 48px);
+}
+
+.cwave i {
+  flex: 1 1 0;
+  min-width: 0;
+  display: block;
+  height: calc(var(--h, 0.4) * 100%);
+}
+
+.cwave i::before {
+  content: "";
+  display: block;
+  width: calc(2px + (100% - 2px) * var(--f, 0));
+  height: 100%;
+  margin: 0 auto;
+  border-radius: 1px;
+  background: var(--ink);
+}
+
+.cwave.is-blue i::before {
+  background: var(--accent);
+}
+
+@media (max-width: 860px) {
+  .cwave i::before {
+    width: calc(1px + (100% - 1px) * var(--f, 0));
+  }
+}

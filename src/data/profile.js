@@ -9,8 +9,8 @@ export const profile = {
   major: "디지털미디어디자인학과",
   minor: "프로그래밍 세부전공",
   // 메인 첫 화면 타이틀 / 서브타이틀
-  heroTitle: ["Connecting", "Empathy", "to Code"],
-  heroSub: "사용자 공감에서 시작해, 코드로 완성하는 웹 콘텐츠 제작자",
+  heroTitle: ["Connecting", "Empathy to Code"],
+  heroSub: ["사용자 공감에서 시작해,", "코드로 완성하는 웹 콘텐츠 제작자"],
   headline: ["사용자 경험을", "인터랙션으로 구현하는", "웹 콘텐츠 제작자"],
   // 이력서 한 줄 소개
   intro: "1차 구현에 만족하지 않고 사용자의 입장에서 결과물을 직접 바라보며 문제를 발견하고 해결합니다.",

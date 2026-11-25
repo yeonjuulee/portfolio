@@ -1,322 +1,316 @@
 .hero {
   position: relative;
-  min-height: max(560px, calc(100vh - var(--header-h)));
-  min-height: max(560px, calc(100svh - var(--header-h)));
-  display: flex;
-  align-items: stretch;
   overflow: hidden;
   background:
     linear-gradient(to right, rgba(15, 16, 32, 0.045) 1px, transparent 1px) 0 0 / 80px 80px,
     var(--paper);
-}
-
-/* 오른쪽 전체를 채우는 영상. 왼쪽으로 갈수록 배경색으로 번집니다. */
-.hero__media {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 17%;
-  right: 0;
-}
-
-.hero__media .gray-box {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  aspect-ratio: auto !important;
-  border-radius: 0;
-}
-
-/* 영상 위에 검정 38% 를 깔아 흰색 버튼이 잘 보이게 합니다. */
-.hero__media .gray-box::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.38);
-  pointer-events: none;
-}
-
-.hero__media::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(to right, var(--paper) 0%, rgba(250, 250, 253, 0.92) 18%, rgba(250, 250, 253, 0.45) 45%, rgba(250, 250, 253, 0) 80%);
-  pointer-events: none;
+  --open: min(675px, 52vw); /* 열린 프로젝트 카드 폭(16:9) */
+  --wave-h: calc(var(--open) * 9 / 16);
 }
 
 .hero__inner {
-  position: relative;
-  z-index: 2;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  align-items: flex-start;
-  gap: 40px;
-  padding-top: clamp(24px, 3vw, 40px);
-  padding-bottom: clamp(36px, 5vw, 72px);
-}
-
-.hero__intro {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  max-width: 660px;
-}
-
-.hero__badge {
-  display: inline-flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 4px 10px;
-  padding: 7px 16px;
-  border: 1px solid var(--line);
-  border-radius: 999px;
-  background: var(--card);
-  font-size: 15px;
-  color: var(--ink-2);
-}
-
-.hero__badge strong {
-  color: var(--ink);
-  font-weight: 600;
-}
-
-.hero__badge span {
-  font-family: var(--font-mono);
-  font-size: 14px;
-  letter-spacing: 0.06em;
-}
-
-.hero__badge i {
-  width: 4px;
-  height: 4px;
-  border-radius: 50%;
-  background: var(--accent);
+  padding-top: clamp(28px, 4vw, 56px);
+  padding-bottom: clamp(32px, 4vw, 56px);
 }
 
 .hero__title {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  margin-top: 28px;
   font-family: var(--font-display);
-  font-size: clamp(2.7rem, 5.6vw, 5.1rem);
+  font-size: clamp(2.7rem, 5.4vw, 5rem);
   font-stretch: 82%;
   font-weight: 600;
-  line-height: 0.98;
+  line-height: 1;
   letter-spacing: -0.04em;
+  text-align: left;
+}
+
+.hero__line {
+  display: block;
 }
 
 .hero__lead {
-  max-width: 25em;
-  margin-top: 26px;
-  font-size: clamp(18px, 1.7vw, 22px);
+  margin-top: 22px;
+  font-size: clamp(17px, 1.5vw, 21px);
   font-weight: 400;
   line-height: 1.55;
-  color: var(--ink);
+  color: var(--ink-2);
+  text-align: left;
   word-break: keep-all;
-  text-wrap: balance;
 }
 
+.hero__lead-line {
+  display: block;
+}
+
+/* 빠르게 보기 + 서류/링크: 서브타이틀 아래 한 줄 */
 .hero__actions {
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 16px;
-  margin-top: 32px;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 20px;
+  margin-top: 24px;
 }
 
 .hero__primary {
-  min-height: 56px;
-  padding: 0 40px;
-  font-size: 18px;
+  display: inline-flex;
+  align-items: center;
+  min-height: 40px;
+  padding: 0 20px;
+  border: 0;
+  border-radius: 999px;
+  background: var(--accent);
+  color: #fff;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: filter 0.15s ease;
 }
 
-/* 서류 · 링크는 하나의 알약 묶음으로 */
+.hero__primary:hover {
+  filter: brightness(1.12);
+}
+
 .hero__docs {
-  display: inline-flex;
+  display: flex;
   flex-wrap: wrap;
-  border: 1.5px solid var(--line);
-  border-radius: 999px;
-  background: var(--card);
-  overflow: hidden;
+  gap: 0 18px;
 }
 
 .hero__docs a {
   display: inline-flex;
   align-items: center;
-  min-height: 48px;
-  padding: 0 24px;
+  min-height: 40px;
+  font-size: 13.5px;
+  color: var(--ink);
+  line-height: 1.2;
+}
+
+.hero__docs a {
+  text-decoration: underline;
+  text-underline-offset: 5px;
+  text-decoration-thickness: 1px;
+}
+
+.hero__docs a:hover {
+  color: var(--accent);
+}
+
+/* ───── 음파 ─────
+   flex 배치: 프로젝트 선이 넓어지면 좌우 선들이 밀려납니다. */
+.hero__wave {
+  display: flex;
+  align-items: stretch;
+  width: 100%;
+  height: var(--wave-h);
+  margin-top: clamp(20px, 3vw, 36px);
+}
+
+.wv {
+  position: relative;
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.wv i {
+  display: block;
+  width: 2px;
+  height: 100%;
+  border-radius: 1px;
+  background: var(--ink);
+  transform: scaleY(var(--s, 0.3));
+}
+
+.wv--pick {
+  flex: 0 0 8px;
+  z-index: 1;
+  cursor: pointer;
+  outline: 0;
+  transition: flex-basis 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.wv--pick::before {
+  content: "";
+  position: absolute;
+  inset: 0 -6px;
+}
+
+.wv--pick:hover,
+.wv--pick:focus-within {
+  flex-basis: var(--open);
+  z-index: 5;
+}
+
+.wv--pick .wv__bar {
+  flex: none;
+  width: 6px;
+  height: calc(var(--s, 0.3) * 100%);
+  background: var(--accent);
+  border-radius: 3px;
+  transform: none;
+  transition: opacity 0.2s ease;
+}
+
+.wv--pick:hover .wv__bar,
+.wv--pick:focus-within .wv__bar {
+  opacity: 0;
+}
+
+.wv__tag {
+  position: absolute;
+  z-index: 2;
+  left: 50%;
+  top: 50%;
+  padding: 0 6px;
+  border-radius: 6px;
+  background: var(--paper);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--accent);
+  white-space: nowrap;
+  pointer-events: none;
+  transform: translate(-50%, calc(var(--s, 0.3) * var(--wave-h) * -0.5 - 30px));
+  transition: opacity 0.2s ease;
+}
+
+.wv--pick:hover .wv__tag,
+.wv--pick:focus-within .wv__tag {
+  opacity: 0;
+}
+
+/* 열린 카드: 이미지가 꽉 차고 아래에서 위로 검은 그라데이션 */
+.wv__panel {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  border-radius: 16px;
+  background: #d9d9d9;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.25s ease, visibility 0s linear 0.25s;
+}
+
+.wv--pick:hover .wv__panel,
+.wv--pick:focus-within .wv__panel {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0.25s ease 0.12s, visibility 0s;
+}
+
+.wv__panel img,
+.wv__empty {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: var(--open); /* 카드가 넓어지는 동안 이미지가 늘어나지 않도록 */
+  max-width: none;
+  height: 100%;
+  transform: translateX(-50%);
+  object-fit: cover;
+}
+
+.wv__empty {
+  display: grid;
+  place-items: center;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: #6b6c75;
+}
+
+.wv__shade {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(10, 10, 20, 0.88) 0, rgba(10, 10, 20, 0.55) 38%, rgba(10, 10, 20, 0) 72%);
+}
+
+.wv__text {
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  width: var(--open);
+  padding: 0 32px 28px;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  color: #fff;
+}
+
+.wv__text h2 {
+  font-size: clamp(1.7rem, 3vw, 2.6rem);
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+}
+
+.wv__text p {
+  margin: 4px 0 14px;
+  max-width: 30em;
   font-size: 15.5px;
+  line-height: 1.55;
+  color: rgba(255, 255, 255, 0.88);
+  word-break: keep-all;
+}
+
+.wv__text a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 22px;
+  border-radius: 999px;
+  background: #fff;
+  color: var(--ink);
+  font-size: 15px;
   font-weight: 500;
   transition: background 0.15s ease, color 0.15s ease;
 }
 
-.hero__docs a + a {
-  border-left: 1px solid var(--line);
-}
-
-.hero__docs a:hover {
-  background: var(--accent-soft);
-  color: var(--accent);
-}
-
-/* 오른쪽 아래: 작업물 번호 + 상세 보기 화살표 (왼쪽 콘텐츠와 같은 컨테이너 폭에 맞춤) */
-.hero__overlay {
-  position: absolute;
-  inset: 0;
-  z-index: 3;
-  padding-top: clamp(24px, 3vw, 40px);
-  padding-bottom: clamp(36px, 5vw, 72px);
-  pointer-events: none;
-}
-
-.hero__work {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  justify-content: flex-end;
-  gap: 6px;
-  height: 100%;
-}
-
-.hero__proj {
-  font-size: clamp(1.5rem, 2.4vw, 2.2rem); /* About 슬로건과 같은 크기·두께 */
-  font-weight: 500;
-  letter-spacing: -0.02em;
-  line-height: 1.3;
+.wv__text a:hover {
+  background: var(--accent);
   color: #fff;
-}
-
-.hero__row {
-  display: flex;
-  align-items: flex-end;
-  gap: 28px;
-}
-
-.hero__work > * {
-  pointer-events: auto;
-}
-
-.hero__tabs {
-  display: flex;
-  gap: 18px;
-  padding-bottom: 14px;
-}
-
-.hero__tabs button {
-  position: relative;
-  min-width: 32px;
-  min-height: 32px;
-  border: 0;
-  background: transparent;
-  font-family: var(--font-mono);
-  font-size: 15px;
-  font-weight: 400;
-  color: rgba(255, 255, 255, 0.72);
-}
-
-.hero__tabs button::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 2px;
-  height: 2px;
-  background: #fff;
-  transform: scaleX(0);
-  transition: transform 0.2s ease;
-}
-
-.hero__tabs button:hover {
-  color: #fff;
-}
-
-.hero__tabs button.is-on {
-  color: #fff;
-  font-weight: 500;
-}
-
-.hero__tabs button.is-on::after {
-  transform: scaleX(1);
-}
-
-.hero__go {
-  display: grid;
-  place-items: center end;
-  width: 64px;
-  height: 72px;
-  margin-right: -6px;
-  font-size: 56px;
-  font-weight: 300;
-  line-height: 1;
-  color: #fff;
-  transition: transform 0.2s ease;
-}
-
-.hero__go:hover {
-  transform: translateX(8px);
 }
 
 @media (max-width: 900px) {
   .hero {
-    display: block;
-    min-height: 0;
+    --open: min(270px, 74vw);
   }
 
-  .hero__inner {
-    padding-top: 28px;
-    padding-bottom: 24px;
+  .hero {
+    --wave-h: calc(var(--open) * 3 / 4); /* 모바일은 4:3 */
   }
 
-  .hero__media {
-    position: relative;
-    left: 0;
-    height: 62vw;
-    min-height: 320px;
+  .wv i {
+    width: 1px;
   }
 
-  .hero__media::after {
-    background: linear-gradient(to bottom, var(--paper) 0%, rgba(250, 250, 253, 0) 35%);
+  .wv__tag {
+    font-size: 12px;
   }
 
-  .hero__overlay {
-    top: auto;
-    bottom: 0;
-    height: 62vw;
-    min-height: 320px;
-    padding-bottom: 16px;
+  .wv__text {
+    padding: 0 20px 20px;
   }
 
-  .hero__docs {
-    display: flex;
-    flex-wrap: nowrap;
-    width: 100%;
-  }
-
-  .hero__docs a {
-    flex: 1;
-    justify-content: center;
-    padding: 0 6px;
-    font-size: 14.5px;
-    white-space: nowrap;
+  .wv__text p {
+    font-size: 14px;
   }
 }
 
-@media (max-width: 900px) {
-  .hero {
-    display: flex;
-    flex-direction: column;
-  }
-
-  .hero__inner {
-    order: 1;
-  }
-
-  .hero__media {
-    order: 2;
-    width: 100%;
+@media (prefers-reduced-motion: reduce) {
+  .wv--pick,
+  .wv__panel,
+  .wv__bar,
+  .wv__tag {
+    transition: none;
   }
 }
