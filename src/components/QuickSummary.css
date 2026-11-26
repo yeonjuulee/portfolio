@@ -42,24 +42,8 @@
   color: var(--ink-2);
 }
 
-/* 헤더의 연한 음파 선 (장식) */
-.qs__wave {
-  display: flex;
-  align-items: center;
-  gap: 2px;
-  height: 34px;
-  margin-left: auto;
-}
-
-.qs__wave i {
-  display: block;
-  width: 2px;
-  height: var(--h);
-  border-radius: 1px;
-  background: #b9b7f3;
-}
-
 .qs__close {
+  margin-left: auto;
   min-height: 44px;
   padding: 0 18px;
   font-size: 15px;
@@ -260,6 +244,7 @@
 
 .qs__pjtx span {
   display: block;
+  white-space: pre-line; /* quickTag 의 줄바꿈을 그대로 보여 줍니다 */
   font-size: 12.5px;
   line-height: 1.4;
   color: rgba(255, 255, 255, 0.85);
@@ -324,7 +309,6 @@
     padding: 10px;
   }
 
-  .qs__wave,
   .qs__bar p {
     display: none;
   }

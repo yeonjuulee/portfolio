@@ -9,7 +9,6 @@ import "./QuickSummary.css";
 
 
 const WN = 45; // 한 줄 소개 칸 음파 선 개수
-const HN = 40; // 헤더 음파 선 개수
 const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
 const noise = (j) => {
   const s = Math.sin(j * 12.9898 + 4.1414) * 43758.5453;
@@ -130,11 +129,6 @@ export default function QuickSummary({ onClose }) {
               {profile.school} {profile.major} · {profile.minor}
             </p>
           </div>
-          <div className="qs__wave" aria-hidden="true">
-            {Array.from({ length: HN }, (_, i) => (
-              <i key={i} style={{ "--h": `${Math.round(4 + 28 * Math.min(1, waveBase(i, HN) + 0.02))}px` }} />
-            ))}
-          </div>
           <button ref={closeRef} type="button" className="btn btn-ghost qs__close" onClick={onClose}>
             닫기
           </button>
@@ -179,7 +173,7 @@ export default function QuickSummary({ onClose }) {
                       {img ? <img src={asset(img)} alt="" loading="lazy" /> : <em>{p.name}</em>}
                       <span className="qs__pjtx">
                         <strong translate="no">{p.name}</strong>
-                        <span>{p.tagline}</span>
+                        <span>{p.quickTag || p.tagline}</span>
                       </span>
                     </Link>
                   </li>
