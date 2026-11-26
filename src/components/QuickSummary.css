@@ -220,39 +220,29 @@
   color: #6b6c75;
 }
 
+/* 썸네일만 보이도록 글자는 화면에서 숨기고(스크린 리더에는 그대로 읽힘), 마우스를 올리면 테두리로 표시합니다. */
 .qs__pj::after {
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(to top, rgba(10, 10, 20, 0.85), rgba(10, 10, 20, 0.35) 45%, rgba(10, 10, 20, 0) 75%);
+  border-radius: inherit;
+  box-shadow: inset 0 0 0 1px rgba(15, 16, 32, 0.14); /* 흰 배경 썸네일도 경계가 보이게 */
+  transition: box-shadow 0.15s ease;
+}
+
+.qs__pj:hover::after,
+.qs__pj:focus-visible::after {
+  box-shadow: inset 0 0 0 3px var(--accent);
 }
 
 .qs__pjtx {
   position: absolute;
-  z-index: 1;
-  left: 14px;
-  right: 14px;
-  bottom: 10px;
-}
-
-.qs__pjtx strong {
-  display: block;
-  font-size: 18px;
-  font-weight: 600;
-  letter-spacing: -0.02em;
-}
-
-.qs__pjtx span {
-  display: block;
-  white-space: pre-line; /* quickTag 의 줄바꿈을 그대로 보여 줍니다 */
-  font-size: 12.5px;
-  line-height: 1.4;
-  color: rgba(255, 255, 255, 0.85);
-}
-
-.qs__pj:hover strong {
-  text-decoration: underline;
-  text-underline-offset: 4px;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
 }
 
 /* 연락 · 서류 */
@@ -388,20 +378,6 @@
 
   .qs__thumbs {
     gap: 8px;
-  }
-
-  .qs__pjtx {
-    left: 8px;
-    right: 8px;
-    bottom: 6px;
-  }
-
-  .qs__pjtx strong {
-    font-size: 14px;
-  }
-
-  .qs__pjtx span {
-    display: none;
   }
 
   .qs__mail {
