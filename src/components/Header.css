@@ -30,9 +30,13 @@
   letter-spacing: 0.02em;
 }
 
+/* 로고(YEONJU)와 같은 글꼴, 굵기만 얇게 */
 .header__role {
-  font-family: var(--font-mono);
-  font-size: 14px;
+  font-family: var(--font-display);
+  font-stretch: 80%;
+  font-weight: 300;
+  font-size: 15px;
+  letter-spacing: 0.02em;
   color: var(--ink-2);
 }
 

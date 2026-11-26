@@ -35,10 +35,19 @@ export default function Header() {
     if (!scrollToSection(id)) navigate("/", { state: { scrollTo: id } });
   };
 
+  // 메인 페이지에서 로고를 누르면 맨 위로 부드럽게 올라갑니다. 다른 페이지에서는 메인으로 이동합니다.
+  const onBrand = (e) => {
+    if (!isHome) return;
+    e.preventDefault();
+    setOpen(false);
+    const reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    window.scrollTo({ top: 0, behavior: reduce ? "auto" : "smooth" });
+  };
+
   return (
     <header className="header">
       <div className="container header__inner">
-        <Link to="/" className="header__brand" aria-label="YEONJU 홈으로">
+        <Link to="/" className="header__brand" aria-label="YEONJU 홈으로" onClick={onBrand}>
           <span className="header__logo" translate="no">
             YEONJU
           </span>
