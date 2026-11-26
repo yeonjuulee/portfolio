@@ -66,7 +66,7 @@ function VideoView({ video, name }) {
 function GalleryView({ project }) {
   const list = project.screens && project.screens.length > 0 ? project.screens : [null, null, null, null];
   const [idx, setIdx] = useState(0);
-  const ratio = project.screenRatio || "16 / 10";
+  const ratio = project.screenRatio || "16 / 9";
 
   useEffect(() => setIdx(0), [project.slug]);
 

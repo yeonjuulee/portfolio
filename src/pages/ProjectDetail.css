@@ -83,8 +83,9 @@
   border-radius: 0;
 }
 
+/* 대표 이미지·화면 시안은 칸(16:9)과 같은 비율로 맞춰 두었으므로 여백 없이 꽉 채웁니다. */
 .detail .gray-box img {
-  object-fit: contain;
+  object-fit: cover;
 }
 
 .detail .detail__media {

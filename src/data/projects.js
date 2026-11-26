@@ -1,6 +1,7 @@
 // 프로젝트 데이터. 새 프로젝트는 배열에 객체 하나만 추가하면 목록/상세 페이지에 자동 반영됩니다.
 //  kind   : "dev"(구현) | "design"(디자인)  — 상세 페이지 라벨용
 //  categories : ["기획","디자인","개발"] 중 해당되는 것 (작업물 필터/카드 태그에 사용, 여러 개 가능)
+//  hidden     : true 이면 사이트 전체에서 가립니다(데이터는 보존)
 //  featured   : true 이면 첫 화면 오른쪽 "대표 작업물" 화면에 노출
 //  status : "완료" | "진행 중" | "정리 중"
 //  code   : [{ title, ai, lines: [...], why?, limit?, video? }]  — video: 해당 코드 결과 영상 경로 (예: "/video/code/nop-slider.mp4"), 비어 있으면 "준비 중" 회색 칸  (없으면 null — 상세 페이지에서 코드 섹션이 숨겨집니다)
@@ -12,11 +13,12 @@
 //  code[].peek: 평소(영상이 닫혀 있을 때) 영상 일부가 보이는 위치, 예 "76% 50%" (생략 시 가운데 위)
 //  poster: 첫 화면 대표 영상이 로딩되기 전에 보일 이미지 (생략 시 cover/thumb)
 //  screenVideo: { src, poster?, ratio?, chapters: [{ label, time(초) }] } — 있으면 화면 시안이 영상 하나 + 장면 버튼으로 보입니다 (없으면 screens 이미지)
-//  screenRatio: 화면 시안 칸 비율, 예 "16 / 9" (생략 시 "16 / 10")
+//  screenRatio: 화면 시안 칸 비율, 예 "16 / 9" (생략 시 "16 / 9")
 //  video  : public 폴더 기준 경로 ("/videos/xxx.mp4"). 비어 있으면 회색 박스가 보입니다.
-export const projects = [
+const allProjects = [
   {
     slug: "keep-scrolling",
+    hidden: true, // 사이트에서 가려 둔 프로젝트(목록·상세·이전/다음에서 모두 제외). 다시 보이려면 이 줄을 지우세요.
     planning: [
       {
         "title": "공개와 비공개 두 층으로, 발견하는 사이트",
@@ -75,7 +77,7 @@ export const projects = [
       "/images/projects/oreum/screen-3-plan.jpg",
       "/images/projects/oreum/screen-4-design.jpg",
     ], // 화면 시안: INTRO → SERVICE → PLAN → DESIGN
-    screenRatio: "16 / 9", // 화면 시안 칸 비율(생략 시 16 / 10)
+    screenRatio: "16 / 9", // 화면 시안 칸 비율(생략 시 16 / 9)
     // 화면 시안 영상(A안: 영상 하나 + 장면 버튼). 지금은 대표 영상을 임시로 넣었습니다.
     // 시안 전체 영상이 준비되면 src 를 바꾸고 chapters 에 { label: "INTRO", time: 0 }, { label: "SERVICE", time: 12 } … 를 채우면 장면 버튼이 생깁니다.
     screenVideo: { src: "/video/code/oreum-intro.mp4", poster: "/images/projects/oreum/hero-poster.jpg", ratio: "16 / 9", chapters: [] },
@@ -246,10 +248,10 @@ export const projects = [
     links: { github: "https://github.com/nfuoah/nop.", demo: "https://nfuoah.github.io/nop./" },
     thumb: "/images/projects/nop/thumb.jpg", // 썸네일 · 상세 대표 이미지
     screens: [
-      "/images/projects/nop/1.png",
-      "/images/projects/nop/2.png",
-      "/images/projects/nop/3.png",
-      "/images/projects/nop/4.png",
+      "/images/projects/nop/1.jpg",
+      "/images/projects/nop/2.jpg",
+      "/images/projects/nop/3.jpg",
+      "/images/projects/nop/4.jpg",
     ], // 화면 시안 이미지
     video: "/video/NOP.mp4",
     overview: "외국인 관광객의 부당 요금 피해를 예방하는 NOP! 서비스의 핵심 기능(스캔, 지도, 시세, 신고)을 소개하는 웹 랜딩페이지입니다. 프레임워크 없이 HTML·CSS·바닐라 JS만으로 통계 그래프, 기능 소개 타임라인, 스캔 시뮬레이션, 신고 슬라이더, 진입 애니메이션 5개 섹션을 설계하고 구현했습니다.",
@@ -262,6 +264,7 @@ export const projects = [
       {
         title: "기능 소개 타임라인: wheel 가로채기와 선언적 상태 테이블",
         ai: false,
+        video: "/video/code/nop-timeline.mp4",
         lines: [
           "function isInSection() {",
           "  const r = section.getBoundingClientRect();",
@@ -282,6 +285,7 @@ export const projects = [
       {
         title: "requestAnimationFrame 기반 DOM 재배치 무한 슬라이더",
         ai: true,
+        video: "/video/code/nop-slider.mp4",
         lines: [
           "function moveSlider() {",
           "  if (!isPaused) {",
@@ -302,6 +306,7 @@ export const projects = [
       {
         title: "스캔 시뮬레이션: 데이터 분리와 클래스 상태 머신",
         ai: true,
+        video: "/video/code/nop-scan.mp4",
         lines: [
           "const scanData = {",
           "  sign:    { main: 'img/service-scan01.png', loading: 'img/service-scan01-1.png', result: 'img/service-scan01-2.png', popup: 'img/service-scan01-3.png' },",
@@ -359,7 +364,90 @@ export const projects = [
     problem: "초안 시나리오는 목숨 5개를 주고, 클릭에 실패하면 목숨이 줄고, 성공하면 점수가 1점 오르는 구조였습니다. 모든 판이 같은 흐름이라 플레이 중 변화가 적고, 난이도를 고를 수도 없었습니다.",
     solution: "최종 시나리오에서 난이도 선택, 기본 점수 100점에서 시작해 0점이 되면 끝나는 규칙, 이벤트 도형(클릭하면 특수 효과가 적용되는 도형)을 추가했습니다. 클릭 성공과 실패만 있던 판에 선택과 위험 요소를 넣은 것입니다.",
     result: "난이도 선택부터 게임 오버·클리어까지 한 판이 이어지는 마우스 리듬 게임을 p5.js로 완성했고, p5.js 웹 에디터에서 바로 플레이할 수 있게 공개했습니다.",
-    code: null,
+    codeCaption: "난이도 데이터, 노트 생성, 클릭 판정, 종료 처리 네 묶음을 정리했습니다. 각 묶음에 핵심 판단과 한계를 함께 적었습니다.",
+    code: [
+      {
+        title: "난이도별 노래·크기·속도: currentLevel 하나로 판이 달라진다",
+        ai: false,
+        lines: [
+          "// 난이도 선택 시: 레벨 저장 + 해당 노래 재생",
+          "currentLevel = l;",
+          "currentSong = songs[currentLevel];",
+          "currentSong.setVolume(0.4);",
+          "currentSong.play();",
+          "",
+          "// 생성 간격(프레임), 노트 크기, 줄어드는 속도가 레벨에 따라 달라진다",
+          "let spawnRate = currentLevel === 1 ? 60 : currentLevel === 2 ? 40 : 25;",
+          "if (currentLevel === 1) this.size = 160;",
+          "else if (currentLevel === 2) this.size = 120;",
+          "else this.size = 80;",
+          "let shrinkSpeed = currentLevel === 1 ? 1.2 : currentLevel === 2 ? 1.6 : 2.2;",
+        ],
+        why: "난이도를 의미하는 변수를 currentLevel 하나로 두고 노래, 노트 크기, 생성 간격, 줄어드는 속도를 모두 거기서 읽게 했습니다. 난이도를 고르면 노래까지 바뀌어 판마다 느낌이 달라집니다.",
+        limit: "같은 삼항 연산자가 세 곳에 흩어져 있어 난이도를 하나 더 추가하려면 여러 곳을 고쳐야 합니다. LEVELS = [{ song, spawn, size, shrink }] 같은 테이블로 모으면 한 곳만 바꾸면 됩니다.",
+      },
+      {
+        title: "노트 타입 확률과 크기 기반 수명",
+        ai: false,
+        lines: [
+          "// 생성 시 타입을 확률로 정한다 (아이템 12%, 폭탄 13%, 나머지 일반)",
+          "let rand = random(1);",
+          "let noteType = 'NORMAL';",
+          "if (rand < 0.12) noteType = 'ITEM';",
+          "else if (rand < 0.25) noteType = 'BOMB';",
+          "notes.push(new Note(noteType));",
+          "",
+          "class Note {",
+          "  update()  { this.size -= shrinkSpeed; }                    // 매 프레임 줄어든다",
+          "  isDead()  { return this.size <= 0; }                       // 다 줄면 사라진다",
+          "  clicked(mx, my) { return dist(mx, my, this.x, this.y) < this.size / 2; }",
+          "}",
+        ],
+        why: "원이 줄어드는 것을 곧 제한 시간으로 썼습니다. 타이머를 따로 두지 않아도 크기 하나로 사라지는 시점, 클릭 판정 범위(size / 2)가 함께 정해집니다.",
+        limit: "프레임 수로 줄이는 방식이라 기기 성능에 따라 체감 속도가 달라질 수 있고, 생성도 음악 박자 분석이 아니라 frameCount % spawnRate의 일정한 주기입니다. deltaTime 기반 시간 계산과 음악 분석 기능으로 보완할 수 있습니다.",
+      },
+      {
+        title: "클릭 판정: 위에 있는 노트부터, 한 번에 하나만",
+        ai: false,
+        lines: [
+          "let hitAnything = false;",
+          "for (let i = notes.length - 1; i >= 0; i--) {   // 나중에 만든(위에 그려진) 노트부터 검사",
+          "  if (notes[i].clicked(mouseX, mouseY)) {",
+          "    hitAnything = true;",
+          "    if (notes[i].type === 'BOMB') { hp -= 10; score = max(0, score - 50); }",
+          "    else if (notes[i].type === 'ITEM') applyItemEffect();",
+          "    else score += 10 * multiplier;",
+          "    notes.splice(i, 1);",
+          "    break;                                       // 겹쳐도 하나만 처리",
+          "  }",
+          "}",
+          "if (!hitAnything) score = max(0, score - 50);    // 빈 화면 클릭 페널티",
+        ],
+        why: "배열을 뒤에서부터 돌려 화면 위에 보이는 노트가 먼저 눌리게 하고, break로 한 번 클릭에 하나만 처리합니다. 빈 화면을 누르면 감점해 아무 곳이나 연타하는 플레이를 막았습니다.",
+        limit: "타입별 처리가 if 문에 직접 들어 있어 타입이 늘면 분기가 길어집니다. 노트 클래스에 onHit() 메서드를 두고 타입마다 다르게 정의하면 분기를 줄일 수 있습니다.",
+      },
+      {
+        title: "체력과 종료: 놓침, 게임 오버, 노래 끝 = 클리어",
+        ai: false,
+        lines: [
+          "if (notes[i].isDead()) {",
+          "  if (notes[i].type !== 'BOMB') {                 // 폭탄은 놓쳐도 감점 없음",
+          "    hp -= 10;",
+          "    if (hp <= 0) {",
+          "      gameState = 'GAMEOVER';",
+          "      if (currentSong && currentSong.isPlaying()) currentSong.stop();",
+          "    }",
+          "  }",
+          "  notes.splice(i, 1);",
+          "}",
+          "",
+          "// 노래가 끝났는데 아직 PLAY 상태면 클리어",
+          "if (currentSong && !currentSong.isPlaying() && gameState === 'PLAY') gameState = 'FINISH';",
+        ],
+        why: "폭탄은 보내줘야 하는 노트라 놓쳐도 벌점이 없게 했고, 노래 길이가 곧 게임 길이가 되도록 재생이 끝나면 클리어로 넘겼습니다. gameState 문자열 하나로 화면 전환을 모두 관리합니다.",
+        limit: "게임 오버 처리(상태 변경과 노래 정지)가 놓침과 폭탄 클릭 두 곳에 중복되어 있고, 일시정지 기능이 없습니다. gameOver() 함수로 묶고 일시정지 상태를 추가하면 보완됩니다.",
+      },
+    ],
   },
   {
     slug: "fish-king",
@@ -752,6 +840,9 @@ export const projects = [
     code: null,
   },
 ];
+
+// hidden: true 인 프로젝트는 사이트 어디에도 나오지 않습니다.
+export const projects = allProjects.filter((p) => !p.hidden);
 
 export const getProject = (slug) => projects.find((p) => p.slug === slug);
 export const getNeighbors = (slug) => {
