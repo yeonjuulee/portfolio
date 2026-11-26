@@ -252,7 +252,20 @@ const allProjects = [
       "/images/projects/nop/2.jpg",
       "/images/projects/nop/3.jpg",
       "/images/projects/nop/4.jpg",
-    ], // 화면 시안 이미지
+    ], // (screenVideo가 있으면 쓰이지 않음)
+    screenVideo: {
+      src: "/video/NOP.mp4",
+      poster: "/images/projects/nop/poster.jpg",
+      ratio: "1600 / 845",
+      chapters: [
+        { label: "첫 화면", time: 0 },
+        { label: "기능 소개", time: 1.5 },
+        { label: "간판 스캔", time: 4.5 },
+        { label: "영수증 스캔", time: 10.5 },
+        { label: "상점 지도", time: 16.5 },
+        { label: "지불·채팅", time: 18 },
+      ],
+    },
     video: "/video/NOP.mp4",
     overview: "외국인 관광객의 부당 요금 피해를 예방하는 NOP! 서비스의 핵심 기능(스캔, 지도, 시세, 신고)을 소개하는 웹 랜딩페이지입니다. 프레임워크 없이 HTML·CSS·바닐라 JS만으로 통계 그래프, 기능 소개 타임라인, 스캔 시뮬레이션, 신고 슬라이더, 진입 애니메이션 5개 섹션을 설계하고 구현했습니다.",
     problem: "앱 소개 페이지에서 정적 스크린샷을 나열하면 '스캔 → 결과 → 상세'라는 사용 흐름이 한눈에 읽히지 않습니다. 영상으로 대체하면 간판과 영수증 시나리오를 각각 촬영해야 해 제작 비용이 두 배가 됩니다.",
